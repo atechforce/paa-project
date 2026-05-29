@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_cadbfdf77582be2c552c6d29668f6868 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_cadbfdf77582be2c552c6d29668f6868" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_cadbfdf77582be2c552c6d29668f6868 = L.map(
+                "map_cadbfdf77582be2c552c6d29668f6868",
+                {
+                    center: [-1.2725, 116.829],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 16,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_33023f7ed1a4729e7b87e03440d2c4cc = L.tileLayer(
+                "https://mt1.google.com/vt/lyrs=m\u0026x={x}\u0026y={y}\u0026z={z}",
+                {
+  "minZoom": 0,
+  "maxZoom": 18,
+  "maxNativeZoom": 18,
+  "noWrap": false,
+  "attribution": "Google Maps",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_33023f7ed1a4729e7b87e03440d2c4cc.addTo(map_cadbfdf77582be2c552c6d29668f6868);
+        
+    
+            var marker_292f9c962e8690be3a7700140799b25a = L.marker(
+                [-1.277157, 116.830263],
+                {
+}
+            ).addTo(map_cadbfdf77582be2c552c6d29668f6868);
+        
+    
+            var icon_8ba893d8af15c8bc04650b51fc3477bb = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_4f64cd5b1215cbb99c5fd420f47ace2a = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_8c54be358d696053d206c58f955421f8 = $(`<div id="html_8c54be358d696053d206c58f955421f8" style="width: 100.0%; height: 100.0%;"><b>taman bekapai</b></div>`)[0];
+                popup_4f64cd5b1215cbb99c5fd420f47ace2a.setContent(html_8c54be358d696053d206c58f955421f8);
+            
+        
+
+        marker_292f9c962e8690be3a7700140799b25a.bindPopup(popup_4f64cd5b1215cbb99c5fd420f47ace2a)
+        ;
+
+        
+    
+    
+            marker_292f9c962e8690be3a7700140799b25a.bindTooltip(
+                `<div>
+                     taman bekapai
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_292f9c962e8690be3a7700140799b25a.setIcon(icon_8ba893d8af15c8bc04650b51fc3477bb);
+            
+    
+            var marker_438e46eedbce9ab84b5359ad4fd32ec0 = L.marker(
+                [-1.275529, 116.831518],
+                {
+}
+            ).addTo(map_cadbfdf77582be2c552c6d29668f6868);
+        
+    
+            var icon_b206d039b74ac8da32df81c98a149490 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_8837d9ef410aae25b25e4ad250781ef1 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_280c72cadcba96647122a901ce88bba2 = $(`<div id="html_280c72cadcba96647122a901ce88bba2" style="width: 100.0%; height: 100.0%;"><b>hotel novotel balikpapan</b></div>`)[0];
+                popup_8837d9ef410aae25b25e4ad250781ef1.setContent(html_280c72cadcba96647122a901ce88bba2);
+            
+        
+
+        marker_438e46eedbce9ab84b5359ad4fd32ec0.bindPopup(popup_8837d9ef410aae25b25e4ad250781ef1)
+        ;
+
+        
+    
+    
+            marker_438e46eedbce9ab84b5359ad4fd32ec0.bindTooltip(
+                `<div>
+                     hotel novotel balikpapan
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_438e46eedbce9ab84b5359ad4fd32ec0.setIcon(icon_b206d039b74ac8da32df81c98a149490);
+            
+    
+            var marker_8ef3e7a48d89da9358afb799fbdcee82 = L.marker(
+                [-1.271815, 116.829033],
+                {
+}
+            ).addTo(map_cadbfdf77582be2c552c6d29668f6868);
+        
+    
+            var icon_beb0be530f473edb12e46b116dfed0ed = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_86afaf32723074c3c8526a5a7d6b5868 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_f120abec3c5505f157b313a3b84afe9e = $(`<div id="html_f120abec3c5505f157b313a3b84afe9e" style="width: 100.0%; height: 100.0%;"><b>hotel grand senyiur balikpapan</b></div>`)[0];
+                popup_86afaf32723074c3c8526a5a7d6b5868.setContent(html_f120abec3c5505f157b313a3b84afe9e);
+            
+        
+
+        marker_8ef3e7a48d89da9358afb799fbdcee82.bindPopup(popup_86afaf32723074c3c8526a5a7d6b5868)
+        ;
+
+        
+    
+    
+            marker_8ef3e7a48d89da9358afb799fbdcee82.bindTooltip(
+                `<div>
+                     hotel grand senyiur balikpapan
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_8ef3e7a48d89da9358afb799fbdcee82.setIcon(icon_beb0be530f473edb12e46b116dfed0ed);
+            
+    
+            var marker_10ba57e1f402c3465bb3f5191dcc3009 = L.marker(
+                [-1.267323, 116.82662],
+                {
+}
+            ).addTo(map_cadbfdf77582be2c552c6d29668f6868);
+        
+    
+            var icon_21462599c07f5f70918bd02bc0c1f2bb = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_99709796c73e29a198ca9c43561c8200 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_019ff9ce59663d81d96b660e8918a48a = $(`<div id="html_019ff9ce59663d81d96b660e8918a48a" style="width: 100.0%; height: 100.0%;"><b>smpn 1 balikpapan</b></div>`)[0];
+                popup_99709796c73e29a198ca9c43561c8200.setContent(html_019ff9ce59663d81d96b660e8918a48a);
+            
+        
+
+        marker_10ba57e1f402c3465bb3f5191dcc3009.bindPopup(popup_99709796c73e29a198ca9c43561c8200)
+        ;
+
+        
+    
+    
+            marker_10ba57e1f402c3465bb3f5191dcc3009.bindTooltip(
+                `<div>
+                     smpn 1 balikpapan
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_10ba57e1f402c3465bb3f5191dcc3009.setIcon(icon_21462599c07f5f70918bd02bc0c1f2bb);
+            
+    
+            var poly_line_a5f57be151ec28976c928a4ac13517ad = L.polyline(
+                [[-1.277157, 116.830263], [-1.275529, 116.831518], [-1.267323, 116.82662], [-1.271815, 116.829033], [-1.277157, 116.830263]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.8, "smoothFactor": 1.0, "stroke": true, "weight": 4}
+            ).addTo(map_cadbfdf77582be2c552c6d29668f6868);
+        
+</script>
+</html>
