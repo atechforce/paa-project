@@ -2,7 +2,7 @@
 
 Project ini adalah aplikasi web fullstack sederhana untuk tugas akhir mata kuliah Perancangan dan Pengembangan Algoritma. Aplikasi digunakan untuk mencari rute pengantaran paket paling optimal dari beberapa lokasi menggunakan algoritma Travelling Salesman Problem dengan Dynamic Programming dan memoization.
 
-Kurir berangkat dari titik awal, mengunjungi semua lokasi tepat satu kali, lalu kembali ke titik awal dengan total jarak minimum.
+Kurir berangkat dari titik awal, mengunjungi semua lokasi tepat satu kali, lalu  ke titik akhir dengan total jarak minimum.
 
 ## Masalah yang Diselesaikan
 
@@ -12,7 +12,7 @@ Contoh kasus:
 
 - Kurir mulai dari Taman Bekapai.
 - Kurir harus mengunjungi Hotel Novotel Balikpapan, Hotel Grand Senyiur Balikpapan, dan SMPN 1 Balikpapan.
-- Setelah semua lokasi dikunjungi, kurir kembali ke Taman Bekapai.
+- Setelah semua lokasi dikunjungi, kurir ke lokasi terakhir.
 - Aplikasi mencari rute dengan jarak paling kecil.
 
 ## Konsep Dynamic Programming

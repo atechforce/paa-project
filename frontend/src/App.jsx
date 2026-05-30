@@ -50,7 +50,7 @@ export default function App() {
           <h1>Visualisasi Dynamic Programming untuk Optimasi Rute Pengantaran Paket</h1>
           <p>
             Aplikasi ini menyelesaikan Travelling Salesman Problem dengan Dynamic Programming dan memoization.
-            Kurir berangkat dari titik awal, mengunjungi setiap lokasi tepat satu kali, lalu kembali ke titik awal
+            Kurir berangkat dari titik awal, mengunjungi setiap lokasi tepat satu kali, lalu ke titik akhir,
             dengan total jarak minimum.
           </p>
         </div>
