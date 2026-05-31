@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_4357ad0b9d4ac562d83caffcefc9de52 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_4357ad0b9d4ac562d83caffcefc9de52" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_4357ad0b9d4ac562d83caffcefc9de52 = L.map(
+                "map_4357ad0b9d4ac562d83caffcefc9de52",
+                {
+                    center: [-1.275529, 116.831518],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 15,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_1ee47f5d2f1360bc65407427f0689b6d = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_1ee47f5d2f1360bc65407427f0689b6d.addTo(map_4357ad0b9d4ac562d83caffcefc9de52);
+        
+    
+            var marker_b814a94441ceaf6ada056f2be30e1116 = L.marker(
+                [-1.275529, 116.831518],
+                {
+}
+            ).addTo(map_4357ad0b9d4ac562d83caffcefc9de52);
+        
+    
+            var div_icon_4885986545d5e151d08f9967ca0494d4 = L.divIcon({
+  "html": "\n                \u003cdiv style=\"\n                    background:#2563eb;\n                    color:white;\n                    width:30px;\n                    height:30px;\n                    border-radius:50%;\n                    display:flex;\n                    align-items:center;\n                    justify-content:center;\n                    font-weight:bold;\n                    border:3px solid white;\n                    box-shadow:0 2px 8px rgba(0,0,0,.35);\n                \"\u003e1\u003c/div\u003e\n                ",
+  "className": "empty",
+});
+        
+    
+        var popup_00827b98f1aa2db02045ea812493bc12 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_a2bcf64b10f4bdb7919d15195a8c7c75 = $(`<div id="html_a2bcf64b10f4bdb7919d15195a8c7c75" style="width: 100.0%; height: 100.0%;"><b>Urutan 1</b><br>Hotel Novotel Balikpapan</div>`)[0];
+                popup_00827b98f1aa2db02045ea812493bc12.setContent(html_a2bcf64b10f4bdb7919d15195a8c7c75);
+            
+        
+
+        marker_b814a94441ceaf6ada056f2be30e1116.bindPopup(popup_00827b98f1aa2db02045ea812493bc12)
+        ;
+
+        
+    
+    
+            marker_b814a94441ceaf6ada056f2be30e1116.bindTooltip(
+                `<div>
+                     1. Hotel Novotel Balikpapan
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_b814a94441ceaf6ada056f2be30e1116.setIcon(div_icon_4885986545d5e151d08f9967ca0494d4);
+            
+    
+            var marker_10c6fca3acb906e1e76aacd8615b52b4 = L.marker(
+                [-1.267323, 116.82662],
+                {
+}
+            ).addTo(map_4357ad0b9d4ac562d83caffcefc9de52);
+        
+    
+            var div_icon_b72c28d01a90459c8223dbe9c0d87b66 = L.divIcon({
+  "html": "\n                \u003cdiv style=\"\n                    background:#2563eb;\n                    color:white;\n                    width:30px;\n                    height:30px;\n                    border-radius:50%;\n                    display:flex;\n                    align-items:center;\n                    justify-content:center;\n                    font-weight:bold;\n                    border:3px solid white;\n                    box-shadow:0 2px 8px rgba(0,0,0,.35);\n                \"\u003e2\u003c/div\u003e\n                ",
+  "className": "empty",
+});
+        
+    
+        var popup_8395cf4b0ac0bfbb9f788b4166dd49f3 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_ca7663e1f9381f7c41b54cbce942afa5 = $(`<div id="html_ca7663e1f9381f7c41b54cbce942afa5" style="width: 100.0%; height: 100.0%;"><b>Urutan 2</b><br>SMPN 1 Balikpapan</div>`)[0];
+                popup_8395cf4b0ac0bfbb9f788b4166dd49f3.setContent(html_ca7663e1f9381f7c41b54cbce942afa5);
+            
+        
+
+        marker_10c6fca3acb906e1e76aacd8615b52b4.bindPopup(popup_8395cf4b0ac0bfbb9f788b4166dd49f3)
+        ;
+
+        
+    
+    
+            marker_10c6fca3acb906e1e76aacd8615b52b4.bindTooltip(
+                `<div>
+                     2. SMPN 1 Balikpapan
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_10c6fca3acb906e1e76aacd8615b52b4.setIcon(div_icon_b72c28d01a90459c8223dbe9c0d87b66);
+            
+    
+            var marker_7971f603e753829bfd3ef932935eb302 = L.marker(
+                [-1.271815, 116.829033],
+                {
+}
+            ).addTo(map_4357ad0b9d4ac562d83caffcefc9de52);
+        
+    
+            var div_icon_fdee6dedda7b0f2706f24c6a873eaf22 = L.divIcon({
+  "html": "\n                \u003cdiv style=\"\n                    background:#2563eb;\n                    color:white;\n                    width:30px;\n                    height:30px;\n                    border-radius:50%;\n                    display:flex;\n                    align-items:center;\n                    justify-content:center;\n                    font-weight:bold;\n                    border:3px solid white;\n                    box-shadow:0 2px 8px rgba(0,0,0,.35);\n                \"\u003e3\u003c/div\u003e\n                ",
+  "className": "empty",
+});
+        
+    
+        var popup_a03f946d1f706d052c5db07a1ec871ad = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_4c2145372d466880afe4e0fd92de1222 = $(`<div id="html_4c2145372d466880afe4e0fd92de1222" style="width: 100.0%; height: 100.0%;"><b>Urutan 3</b><br>Hotel Grand Senyiur Balikpapan</div>`)[0];
+                popup_a03f946d1f706d052c5db07a1ec871ad.setContent(html_4c2145372d466880afe4e0fd92de1222);
+            
+        
+
+        marker_7971f603e753829bfd3ef932935eb302.bindPopup(popup_a03f946d1f706d052c5db07a1ec871ad)
+        ;
+
+        
+    
+    
+            marker_7971f603e753829bfd3ef932935eb302.bindTooltip(
+                `<div>
+                     3. Hotel Grand Senyiur Balikpapan
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_7971f603e753829bfd3ef932935eb302.setIcon(div_icon_fdee6dedda7b0f2706f24c6a873eaf22);
+            
+    
+            var marker_238d67e03e71735b6bd2f3211ee2c264 = L.marker(
+                [-1.27662, 116.8271],
+                {
+}
+            ).addTo(map_4357ad0b9d4ac562d83caffcefc9de52);
+        
+    
+            var div_icon_ddee6dc5d67a7a95abb4b7245cd9eefb = L.divIcon({
+  "html": "\n                \u003cdiv style=\"\n                    background:#2563eb;\n                    color:white;\n                    width:30px;\n                    height:30px;\n                    border-radius:50%;\n                    display:flex;\n                    align-items:center;\n                    justify-content:center;\n                    font-weight:bold;\n                    border:3px solid white;\n                    box-shadow:0 2px 8px rgba(0,0,0,.35);\n                \"\u003e4\u003c/div\u003e\n                ",
+  "className": "empty",
+});
+        
+    
+        var popup_7f1f8898b12f6d2ef4a6b43c0f26334b = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_11af9985836fe3e48fdf2c86649881ca = $(`<div id="html_11af9985836fe3e48fdf2c86649881ca" style="width: 100.0%; height: 100.0%;"><b>Urutan 4</b><br>Balikpapan Plaza</div>`)[0];
+                popup_7f1f8898b12f6d2ef4a6b43c0f26334b.setContent(html_11af9985836fe3e48fdf2c86649881ca);
+            
+        
+
+        marker_238d67e03e71735b6bd2f3211ee2c264.bindPopup(popup_7f1f8898b12f6d2ef4a6b43c0f26334b)
+        ;
+
+        
+    
+    
+            marker_238d67e03e71735b6bd2f3211ee2c264.bindTooltip(
+                `<div>
+                     4. Balikpapan Plaza
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_238d67e03e71735b6bd2f3211ee2c264.setIcon(div_icon_ddee6dc5d67a7a95abb4b7245cd9eefb);
+            
+    
+            var marker_1aa3daffae348d1fb94bbef8bc96cea7 = L.marker(
+                [-1.27925, 116.82455],
+                {
+}
+            ).addTo(map_4357ad0b9d4ac562d83caffcefc9de52);
+        
+    
+            var div_icon_60c3e516eb769e198c48e2055e407acc = L.divIcon({
+  "html": "\n                \u003cdiv style=\"\n                    background:#2563eb;\n                    color:white;\n                    width:30px;\n                    height:30px;\n                    border-radius:50%;\n                    display:flex;\n                    align-items:center;\n                    justify-content:center;\n                    font-weight:bold;\n                    border:3px solid white;\n                    box-shadow:0 2px 8px rgba(0,0,0,.35);\n                \"\u003e5\u003c/div\u003e\n                ",
+  "className": "empty",
+});
+        
+    
+        var popup_29a0355ea86a2f5c5ac4d3948e0a710a = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_f95c162e0ffc870e37415229b1c1b921 = $(`<div id="html_f95c162e0ffc870e37415229b1c1b921" style="width: 100.0%; height: 100.0%;"><b>Urutan 5</b><br>Pantai Kemala</div>`)[0];
+                popup_29a0355ea86a2f5c5ac4d3948e0a710a.setContent(html_f95c162e0ffc870e37415229b1c1b921);
+            
+        
+
+        marker_1aa3daffae348d1fb94bbef8bc96cea7.bindPopup(popup_29a0355ea86a2f5c5ac4d3948e0a710a)
+        ;
+
+        
+    
+    
+            marker_1aa3daffae348d1fb94bbef8bc96cea7.bindTooltip(
+                `<div>
+                     5. Pantai Kemala
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_1aa3daffae348d1fb94bbef8bc96cea7.setIcon(div_icon_60c3e516eb769e198c48e2055e407acc);
+            
+    
+            var marker_a0a700573c32ce14d84bb0a80059175d = L.marker(
+                [-1.277157, 116.830263],
+                {
+}
+            ).addTo(map_4357ad0b9d4ac562d83caffcefc9de52);
+        
+    
+            var div_icon_bb61d58ba97dd4952d01755d63da32b0 = L.divIcon({
+  "html": "\n                \u003cdiv style=\"\n                    background:#2563eb;\n                    color:white;\n                    width:30px;\n                    height:30px;\n                    border-radius:50%;\n                    display:flex;\n                    align-items:center;\n                    justify-content:center;\n                    font-weight:bold;\n                    border:3px solid white;\n                    box-shadow:0 2px 8px rgba(0,0,0,.35);\n                \"\u003e6\u003c/div\u003e\n                ",
+  "className": "empty",
+});
+        
+    
+        var popup_11decf2e885c2d07bde3a38cab435042 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_358faa17c60273af9de8542eeb94f8be = $(`<div id="html_358faa17c60273af9de8542eeb94f8be" style="width: 100.0%; height: 100.0%;"><b>Urutan 6</b><br>Taman Bekapai</div>`)[0];
+                popup_11decf2e885c2d07bde3a38cab435042.setContent(html_358faa17c60273af9de8542eeb94f8be);
+            
+        
+
+        marker_a0a700573c32ce14d84bb0a80059175d.bindPopup(popup_11decf2e885c2d07bde3a38cab435042)
+        ;
+
+        
+    
+    
+            marker_a0a700573c32ce14d84bb0a80059175d.bindTooltip(
+                `<div>
+                     6. Taman Bekapai
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_a0a700573c32ce14d84bb0a80059175d.setIcon(div_icon_bb61d58ba97dd4952d01755d63da32b0);
+            
+    
+            var poly_line_7d9b45398200dc87e46e9ee9d81ea218 = L.polyline(
+                [[-1.275529, 116.831518], [-1.267323, 116.82662], [-1.271815, 116.829033], [-1.27662, 116.8271], [-1.27925, 116.82455], [-1.277157, 116.830263], [-1.275529, 116.831518]],
+                {"bubblingMouseEvents": true, "color": "#3388ff", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#3388ff", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.85, "smoothFactor": 1.0, "stroke": true, "weight": 5}
+            ).addTo(map_4357ad0b9d4ac562d83caffcefc9de52);
+        
+    
+            poly_line_7d9b45398200dc87e46e9ee9d81ea218.bindTooltip(
+                `<div>
+                     Total jarak: 8.20 km
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+</script>
+</html>
