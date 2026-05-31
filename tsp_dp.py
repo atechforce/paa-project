@@ -160,4 +160,5 @@ def solve_tsp_dp(lokasi, matriks_jarak, start_index=0):
         "memo_table": memo_table,
         "steps": langkah,
         "execution_time": waktu_selesai - waktu_mulai,
+        "state_count": len(memo),
     }

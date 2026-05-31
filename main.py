@@ -50,19 +50,19 @@ def tampilkan_memo(hasil, batas=20):
     print()
 
 
-def tampilkan_langkah(hasil, batas=8):
-    print("=== CONTOH LANGKAH PERHITUNGAN DP ===")
-    for nomor, step in enumerate(hasil["steps"][:batas], start=1):
-        print(f"Step {nomor}")
-        print(f"  Current Node : {step['nama_current']}")
-        print(f"  Visited Mask : {step['visited_mask']}")
-        print(f"  Dipilih      : {step['nama_dipilih']}")
-        print(f"  Hasil State  : {step['hasil_state']:.2f} km")
-        print()
+# def tampilkan_langkah(hasil, batas=8):
+#     print("=== CONTOH LANGKAH PERHITUNGAN DP ===")
+#     for nomor, step in enumerate(hasil["steps"][:batas], start=1):
+#         print(f"Step {nomor}")
+#         print(f"  Current Node : {step['nama_current']}")
+#         print(f"  Visited Mask : {step['visited_mask']}")
+#         print(f"  Dipilih      : {step['nama_dipilih']}")
+#         print(f"  Hasil State  : {step['hasil_state']:.2f} km")
+#         print()
 
-    if len(hasil["steps"]) > batas:
-        print(f"... {len(hasil['steps']) - batas} langkah lainnya tidak ditampilkan.")
-    print()
+    # if len(hasil["steps"]) > batas:
+    #     print(f"... {len(hasil['steps']) - batas} langkah lainnya tidak ditampilkan.")
+    # print()
 
 
 def input_titik_awal():
@@ -97,7 +97,9 @@ def main():
 
     tampilkan_hasil(hasil)
     tampilkan_memo(hasil)
-    tampilkan_langkah(hasil)
+    # tampilkan_langkah(hasil)
+    print(f"Jumlah state DP yang dihitung: {hasil['state_count']}")
+
 
     buat_visualisasi = input("Buat visualisasi peta HTML? (y/n): ").strip().lower()
     if buat_visualisasi == "y":
