@@ -12,7 +12,7 @@ lokasi = [
 
 # Koordinat digunakan untuk visualisasi peta Folium.
 # Format: index_lokasi: (latitude, longitude)
-koordinat_lokasi = {
+koordinat = {
     0: (-1.277157, 116.830263),  # Taman Bekapai
     1: (-1.275529, 116.831518),  # Hotel Novotel Balikpapan
     2: (-1.271815, 116.829033),  # Hotel Grand Senyiur Balikpapan
