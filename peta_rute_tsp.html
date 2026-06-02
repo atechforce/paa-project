@@ -17,7 +17,7 @@
             <meta name="viewport" content="width=device-width,
                 initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
             <style>
-                #map_aedb5e8fc28b1766727b5081adc3b416 {
+                #map_845c664f5c0ef53fdbb4f4a124fa93a8 {
                     position: relative;
                     width: 100.0%;
                     height: 100.0%;
@@ -54,19 +54,37 @@
 <body>
     
     
-            <div class="folium-map" id="map_aedb5e8fc28b1766727b5081adc3b416" ></div>
+    <div style="
+        position: fixed;
+        bottom: 25px;
+        left: 25px;
+        z-index: 9999;
+        background: white;
+        padding: 12px 14px;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.25);
+        font-family: Arial, sans-serif;
+        font-size: 13px;
+    ">
+        <b>Keterangan:</b><br>
+        Angka menunjukkan urutan kunjungan rute.<br>
+        Label <b>1/7</b> berarti titik awal sekaligus titik akhir.
+    </div>
+    
+    
+            <div class="folium-map" id="map_845c664f5c0ef53fdbb4f4a124fa93a8" ></div>
         
 </body>
 <script>
     
     
-            var map_aedb5e8fc28b1766727b5081adc3b416 = L.map(
-                "map_aedb5e8fc28b1766727b5081adc3b416",
+            var map_845c664f5c0ef53fdbb4f4a124fa93a8 = L.map(
+                "map_845c664f5c0ef53fdbb4f4a124fa93a8",
                 {
-                    center: [-1.2735, 116.829],
+                    center: [-1.275584, 116.83478],
                     crs: L.CRS.EPSG3857,
                     ...{
-  "zoom": 15,
+  "zoom": 14,
   "zoomControl": true,
   "preferCanvas": false,
 }
@@ -78,7 +96,7 @@
 
         
     
-            var tile_layer_af537f4ffd7807d9d99af04159f7e61e = L.tileLayer(
+            var tile_layer_2155bfeefa35326ae3789b02b7011e4f = L.tileLayer(
                 "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
                 {
   "minZoom": 0,
@@ -95,47 +113,42 @@
             );
         
     
-            tile_layer_af537f4ffd7807d9d99af04159f7e61e.addTo(map_aedb5e8fc28b1766727b5081adc3b416);
+            tile_layer_2155bfeefa35326ae3789b02b7011e4f.addTo(map_845c664f5c0ef53fdbb4f4a124fa93a8);
         
     
-            var marker_2be2b0996e4cc717ff38b41cd34f9536 = L.marker(
-                [-1.2774, 116.8292],
+            var marker_bb7ac34939ded63acc5bf998a4ca529a = L.marker(
+                [-1.275584, 116.83478],
                 {
 }
-            ).addTo(map_aedb5e8fc28b1766727b5081adc3b416);
+            ).addTo(map_845c664f5c0ef53fdbb4f4a124fa93a8);
         
     
-            var icon_71d26b2ae77f960ae4e6c55a28ba178e = L.AwesomeMarkers.icon(
-                {
-  "markerColor": "blue",
-  "iconColor": "white",
-  "icon": "info-sign",
-  "prefix": "glyphicon",
-  "extraClasses": "fa-rotate-0",
-}
-            );
+            var div_icon_545489eaeb04c1660b48b38407979d85 = L.divIcon({
+  "html": "\n        \u003cdiv style=\"\n            background-color:#2563eb;\n            color:white;\n            min-width:34px;\n            height:34px;\n            padding:0 6px;\n            border-radius:999px;\n            text-align:center;\n            line-height:34px;\n            font-weight:bold;\n            border:3px solid white;\n            box-shadow:0 2px 8px rgba(0,0,0,0.35);\n            font-size:13px;\n            font-family:Arial, sans-serif;\n        \"\u003e\n            1/7\n        \u003c/div\u003e\n        ",
+  "className": "empty",
+});
         
     
-        var popup_0dc1015ffe9714ef7f8ba4da112a9503 = L.popup({
+        var popup_4f796084fa183eabe668d2f3ed50aa7a = L.popup({
   "maxWidth": "100%",
 });
 
         
             
-                var html_e41be1ab9cbde4e33207c8c8a8fabbf2 = $(`<div id="html_e41be1ab9cbde4e33207c8c8a8fabbf2" style="width: 100.0%; height: 100.0%;"><b>taman bekapai</b></div>`)[0];
-                popup_0dc1015ffe9714ef7f8ba4da112a9503.setContent(html_e41be1ab9cbde4e33207c8c8a8fabbf2);
+                var html_2b202182387bc49f491097a7c830e4a4 = $(`<div id="html_2b202182387bc49f491097a7c830e4a4" style="width: 100.0%; height: 100.0%;">Urutan 1/7: Hotel Novotel Balikpapan</div>`)[0];
+                popup_4f796084fa183eabe668d2f3ed50aa7a.setContent(html_2b202182387bc49f491097a7c830e4a4);
             
         
 
-        marker_2be2b0996e4cc717ff38b41cd34f9536.bindPopup(popup_0dc1015ffe9714ef7f8ba4da112a9503)
+        marker_bb7ac34939ded63acc5bf998a4ca529a.bindPopup(popup_4f796084fa183eabe668d2f3ed50aa7a)
         ;
 
         
     
     
-            marker_2be2b0996e4cc717ff38b41cd34f9536.bindTooltip(
+            marker_bb7ac34939ded63acc5bf998a4ca529a.bindTooltip(
                 `<div>
-                     taman bekapai
+                     Urutan 1/7: Hotel Novotel Balikpapan
                  </div>`,
                 {
   "sticky": true,
@@ -143,47 +156,42 @@
             );
         
     
-                marker_2be2b0996e4cc717ff38b41cd34f9536.setIcon(icon_71d26b2ae77f960ae4e6c55a28ba178e);
+                marker_bb7ac34939ded63acc5bf998a4ca529a.setIcon(div_icon_545489eaeb04c1660b48b38407979d85);
             
     
-            var marker_2e2968c616673edeb5924fa62bc222a1 = L.marker(
-                [-1.2759, 116.8315],
+            var marker_cf170cc734f60b98dddc6f930d8f4bac = L.marker(
+                [-1.271086, 116.833589],
                 {
 }
-            ).addTo(map_aedb5e8fc28b1766727b5081adc3b416);
+            ).addTo(map_845c664f5c0ef53fdbb4f4a124fa93a8);
         
     
-            var icon_b62413a652dbe9ef0100d9dbc280c9f0 = L.AwesomeMarkers.icon(
-                {
-  "markerColor": "blue",
-  "iconColor": "white",
-  "icon": "info-sign",
-  "prefix": "glyphicon",
-  "extraClasses": "fa-rotate-0",
-}
-            );
+            var div_icon_de2b00e7eb51ac7cffee2ebe369ae98e = L.divIcon({
+  "html": "\n        \u003cdiv style=\"\n            background-color:#2563eb;\n            color:white;\n            min-width:34px;\n            height:34px;\n            padding:0 6px;\n            border-radius:999px;\n            text-align:center;\n            line-height:34px;\n            font-weight:bold;\n            border:3px solid white;\n            box-shadow:0 2px 8px rgba(0,0,0,0.35);\n            font-size:13px;\n            font-family:Arial, sans-serif;\n        \"\u003e\n            2\n        \u003c/div\u003e\n        ",
+  "className": "empty",
+});
         
     
-        var popup_96ae3d01255da0f76255e9e834c2879e = L.popup({
+        var popup_aaea0b54a5a24c35b12cd78397a02392 = L.popup({
   "maxWidth": "100%",
 });
 
         
             
-                var html_b6c40b8452130ab90cf55b141bbbcbb7 = $(`<div id="html_b6c40b8452130ab90cf55b141bbbcbb7" style="width: 100.0%; height: 100.0%;"><b>hotel novotel balikpapan</b></div>`)[0];
-                popup_96ae3d01255da0f76255e9e834c2879e.setContent(html_b6c40b8452130ab90cf55b141bbbcbb7);
+                var html_0d56e0ad3360a1a8822a5472d879969f = $(`<div id="html_0d56e0ad3360a1a8822a5472d879969f" style="width: 100.0%; height: 100.0%;">Urutan 2: SMPN 1 Balikpapan</div>`)[0];
+                popup_aaea0b54a5a24c35b12cd78397a02392.setContent(html_0d56e0ad3360a1a8822a5472d879969f);
             
         
 
-        marker_2e2968c616673edeb5924fa62bc222a1.bindPopup(popup_96ae3d01255da0f76255e9e834c2879e)
+        marker_cf170cc734f60b98dddc6f930d8f4bac.bindPopup(popup_aaea0b54a5a24c35b12cd78397a02392)
         ;
 
         
     
     
-            marker_2e2968c616673edeb5924fa62bc222a1.bindTooltip(
+            marker_cf170cc734f60b98dddc6f930d8f4bac.bindTooltip(
                 `<div>
-                     hotel novotel balikpapan
+                     Urutan 2: SMPN 1 Balikpapan
                  </div>`,
                 {
   "sticky": true,
@@ -191,47 +199,42 @@
             );
         
     
-                marker_2e2968c616673edeb5924fa62bc222a1.setIcon(icon_b62413a652dbe9ef0100d9dbc280c9f0);
+                marker_cf170cc734f60b98dddc6f930d8f4bac.setIcon(div_icon_de2b00e7eb51ac7cffee2ebe369ae98e);
             
     
-            var marker_8b9a2d505a44a180097767faa3fd33db = L.marker(
-                [-1.2727, 116.8282],
+            var marker_2d03226e9d3d576eb9676e3a8e7b08a4 = L.marker(
+                [-1.272935, 116.833273],
                 {
 }
-            ).addTo(map_aedb5e8fc28b1766727b5081adc3b416);
+            ).addTo(map_845c664f5c0ef53fdbb4f4a124fa93a8);
         
     
-            var icon_aea980517e5d7982038000b1b6945a0f = L.AwesomeMarkers.icon(
-                {
-  "markerColor": "blue",
-  "iconColor": "white",
-  "icon": "info-sign",
-  "prefix": "glyphicon",
-  "extraClasses": "fa-rotate-0",
-}
-            );
+            var div_icon_d574c3f2e41a311d65f861bb2f179ef6 = L.divIcon({
+  "html": "\n        \u003cdiv style=\"\n            background-color:#2563eb;\n            color:white;\n            min-width:34px;\n            height:34px;\n            padding:0 6px;\n            border-radius:999px;\n            text-align:center;\n            line-height:34px;\n            font-weight:bold;\n            border:3px solid white;\n            box-shadow:0 2px 8px rgba(0,0,0,0.35);\n            font-size:13px;\n            font-family:Arial, sans-serif;\n        \"\u003e\n            3\n        \u003c/div\u003e\n        ",
+  "className": "empty",
+});
         
     
-        var popup_eb82bca55be36476a338937133f30729 = L.popup({
+        var popup_f5f0ce57d64648c9d21795cda7a1f9f1 = L.popup({
   "maxWidth": "100%",
 });
 
         
             
-                var html_6741afeb07ca2b30f19caa2ee67b109d = $(`<div id="html_6741afeb07ca2b30f19caa2ee67b109d" style="width: 100.0%; height: 100.0%;"><b>hotel grand senyiur balikpapan</b></div>`)[0];
-                popup_eb82bca55be36476a338937133f30729.setContent(html_6741afeb07ca2b30f19caa2ee67b109d);
+                var html_0265fabd1d2ca775ac5093c2958b5cd6 = $(`<div id="html_0265fabd1d2ca775ac5093c2958b5cd6" style="width: 100.0%; height: 100.0%;">Urutan 3: Hotel Grand Senyiur Balikpapan</div>`)[0];
+                popup_f5f0ce57d64648c9d21795cda7a1f9f1.setContent(html_0265fabd1d2ca775ac5093c2958b5cd6);
             
         
 
-        marker_8b9a2d505a44a180097767faa3fd33db.bindPopup(popup_eb82bca55be36476a338937133f30729)
+        marker_2d03226e9d3d576eb9676e3a8e7b08a4.bindPopup(popup_f5f0ce57d64648c9d21795cda7a1f9f1)
         ;
 
         
     
     
-            marker_8b9a2d505a44a180097767faa3fd33db.bindTooltip(
+            marker_2d03226e9d3d576eb9676e3a8e7b08a4.bindTooltip(
                 `<div>
-                     hotel grand senyiur balikpapan
+                     Urutan 3: Hotel Grand Senyiur Balikpapan
                  </div>`,
                 {
   "sticky": true,
@@ -239,47 +242,42 @@
             );
         
     
-                marker_8b9a2d505a44a180097767faa3fd33db.setIcon(icon_aea980517e5d7982038000b1b6945a0f);
+                marker_2d03226e9d3d576eb9676e3a8e7b08a4.setIcon(div_icon_d574c3f2e41a311d65f861bb2f179ef6);
             
     
-            var marker_e299bf1740055d0aace6b08ffce9749d = L.marker(
-                [-1.2687, 116.8271],
+            var marker_42cbe314ba388764c9d56d59ebabbd95 = L.marker(
+                [-1.27662, 116.8271],
                 {
 }
-            ).addTo(map_aedb5e8fc28b1766727b5081adc3b416);
+            ).addTo(map_845c664f5c0ef53fdbb4f4a124fa93a8);
         
     
-            var icon_5dfd84927b7948b1a44c2f7e7fd444ba = L.AwesomeMarkers.icon(
-                {
-  "markerColor": "blue",
-  "iconColor": "white",
-  "icon": "info-sign",
-  "prefix": "glyphicon",
-  "extraClasses": "fa-rotate-0",
-}
-            );
+            var div_icon_e16408a3eb5dcb04dbc21454b071c4ec = L.divIcon({
+  "html": "\n        \u003cdiv style=\"\n            background-color:#2563eb;\n            color:white;\n            min-width:34px;\n            height:34px;\n            padding:0 6px;\n            border-radius:999px;\n            text-align:center;\n            line-height:34px;\n            font-weight:bold;\n            border:3px solid white;\n            box-shadow:0 2px 8px rgba(0,0,0,0.35);\n            font-size:13px;\n            font-family:Arial, sans-serif;\n        \"\u003e\n            4\n        \u003c/div\u003e\n        ",
+  "className": "empty",
+});
         
     
-        var popup_b67b126993d5fb24f5964451f8cb415b = L.popup({
+        var popup_d8c1cba0c320ad48870c12c19047c05d = L.popup({
   "maxWidth": "100%",
 });
 
         
             
-                var html_d9c5c4f09aab25d264e2d683e0333d81 = $(`<div id="html_d9c5c4f09aab25d264e2d683e0333d81" style="width: 100.0%; height: 100.0%;"><b>smpn 1 balikpapan</b></div>`)[0];
-                popup_b67b126993d5fb24f5964451f8cb415b.setContent(html_d9c5c4f09aab25d264e2d683e0333d81);
+                var html_7599ceed050a8ed4f5001249f49fc953 = $(`<div id="html_7599ceed050a8ed4f5001249f49fc953" style="width: 100.0%; height: 100.0%;">Urutan 4: Balikpapan Plaza</div>`)[0];
+                popup_d8c1cba0c320ad48870c12c19047c05d.setContent(html_7599ceed050a8ed4f5001249f49fc953);
             
         
 
-        marker_e299bf1740055d0aace6b08ffce9749d.bindPopup(popup_b67b126993d5fb24f5964451f8cb415b)
+        marker_42cbe314ba388764c9d56d59ebabbd95.bindPopup(popup_d8c1cba0c320ad48870c12c19047c05d)
         ;
 
         
     
     
-            marker_e299bf1740055d0aace6b08ffce9749d.bindTooltip(
+            marker_42cbe314ba388764c9d56d59ebabbd95.bindTooltip(
                 `<div>
-                     smpn 1 balikpapan
+                     Urutan 4: Balikpapan Plaza
                  </div>`,
                 {
   "sticky": true,
@@ -287,18 +285,42 @@
             );
         
     
-                marker_e299bf1740055d0aace6b08ffce9749d.setIcon(icon_5dfd84927b7948b1a44c2f7e7fd444ba);
+                marker_42cbe314ba388764c9d56d59ebabbd95.setIcon(div_icon_e16408a3eb5dcb04dbc21454b071c4ec);
             
     
-            var poly_line_a0247152ecdc25213ce14cea392028de = L.polyline(
-                [[-1.277324, 116.829191], [-1.277327, 116.829164], [-1.277348, 116.82877], [-1.277344, 116.828746], [-1.277348, 116.828622], [-1.277355, 116.82849], [-1.277357, 116.828449], [-1.277386, 116.82818], [-1.277402, 116.828071], [-1.27741, 116.828012], [-1.277307, 116.828007], [-1.277241, 116.828456], [-1.277226, 116.828681], [-1.277223, 116.828737], [-1.277183, 116.829515], [-1.277179, 116.829571], [-1.27717, 116.829733], [-1.277158, 116.831001], [-1.27715, 116.831326], [-1.276647, 116.831321], [-1.276637, 116.831322], [-1.276627, 116.831318], [-1.276621, 116.831311], [-1.276618, 116.831301], [-1.276621, 116.830994], [-1.276122, 116.830972], [-1.275757, 116.831104]],
-                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "red", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.8, "smoothFactor": 1.0, "stroke": true, "weight": 5}
-            ).addTo(map_aedb5e8fc28b1766727b5081adc3b416);
+            var marker_4fcb0a720490e986baaa1ea60fcbf8e0 = L.marker(
+                [-1.281096, 116.817581],
+                {
+}
+            ).addTo(map_845c664f5c0ef53fdbb4f4a124fa93a8);
         
     
-            poly_line_a0247152ecdc25213ce14cea392028de.bindTooltip(
+            var div_icon_3c1c2e65cdd6dd51018815be07e8146d = L.divIcon({
+  "html": "\n        \u003cdiv style=\"\n            background-color:#2563eb;\n            color:white;\n            min-width:34px;\n            height:34px;\n            padding:0 6px;\n            border-radius:999px;\n            text-align:center;\n            line-height:34px;\n            font-weight:bold;\n            border:3px solid white;\n            box-shadow:0 2px 8px rgba(0,0,0,0.35);\n            font-size:13px;\n            font-family:Arial, sans-serif;\n        \"\u003e\n            5\n        \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+        var popup_eb177aeef186cc39e92dfdb161d5b840 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_4db25193f9ff981395c8e420fa6ba1e6 = $(`<div id="html_4db25193f9ff981395c8e420fa6ba1e6" style="width: 100.0%; height: 100.0%;">Urutan 5: Pantai Kemala</div>`)[0];
+                popup_eb177aeef186cc39e92dfdb161d5b840.setContent(html_4db25193f9ff981395c8e420fa6ba1e6);
+            
+        
+
+        marker_4fcb0a720490e986baaa1ea60fcbf8e0.bindPopup(popup_eb177aeef186cc39e92dfdb161d5b840)
+        ;
+
+        
+    
+    
+            marker_4fcb0a720490e986baaa1ea60fcbf8e0.bindTooltip(
                 `<div>
-                     Rute: taman bekapai ke hotel novotel balikpapan
+                     Urutan 5: Pantai Kemala
                  </div>`,
                 {
   "sticky": true,
@@ -306,15 +328,42 @@
             );
         
     
-            var poly_line_831dc35b7720037db070fc86882ef036 = L.polyline(
-                [[-1.275757, 116.831104], [-1.276122, 116.830972], [-1.276621, 116.830994], [-1.277158, 116.831001], [-1.27715, 116.831326], [-1.277147, 116.831522], [-1.277143, 116.831893], [-1.277141, 116.832062], [-1.277139, 116.832257], [-1.277122, 116.832763], [-1.277121, 116.832851], [-1.27711, 116.833403], [-1.276555, 116.833393], [-1.276534, 116.833393], [-1.275556, 116.833322], [-1.275391, 116.833284], [-1.274389, 116.833054], [-1.273893, 116.832944], [-1.273722, 116.832882], [-1.273387, 116.832759], [-1.273091, 116.832647], [-1.272887, 116.832551], [-1.272462, 116.832322], [-1.272239, 116.832052], [-1.272272, 116.831939], [-1.2723, 116.831815], [-1.272313, 116.831658], [-1.272305, 116.831551], [-1.272307, 116.831448], [-1.272373, 116.830681], [-1.272417, 116.830207], [-1.272463, 116.829432], [-1.272472, 116.829187], [-1.272474, 116.829155], [-1.272526, 116.828668], [-1.272528, 116.82865], [-1.27253, 116.82863], [-1.272617, 116.828031], [-1.27266, 116.82779], [-1.272742, 116.827412], [-1.272918, 116.826628], [-1.272542, 116.826544], [-1.272265, 116.826492], [-1.272173, 116.826525], [-1.272088, 116.826581], [-1.272036, 116.826608], [-1.271987, 116.826661], [-1.271925, 116.827165], [-1.271823, 116.827589], [-1.271772, 116.827782], [-1.271708, 116.827916], [-1.271619, 116.827941], [-1.271531, 116.827884], [-1.271423, 116.827664], [-1.271327, 116.827603], [-1.27123, 116.827536], [-1.271055, 116.82747], [-1.270744, 116.82732], [-1.270663, 116.827264], [-1.270447, 116.827102], [-1.27023, 116.826965], [-1.270005, 116.826824], [-1.269604, 116.826744], [-1.26951, 116.82673], [-1.269343, 116.826708], [-1.269089, 116.82678], [-1.268914, 116.82683], [-1.268697, 116.826925], [-1.26864, 116.826948]],
-                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "red", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.8, "smoothFactor": 1.0, "stroke": true, "weight": 5}
-            ).addTo(map_aedb5e8fc28b1766727b5081adc3b416);
+                marker_4fcb0a720490e986baaa1ea60fcbf8e0.setIcon(div_icon_3c1c2e65cdd6dd51018815be07e8146d);
+            
+    
+            var marker_7e7128bcd95005082fe07d0591dd30d3 = L.marker(
+                [-1.276809, 116.833898],
+                {
+}
+            ).addTo(map_845c664f5c0ef53fdbb4f4a124fa93a8);
         
     
-            poly_line_831dc35b7720037db070fc86882ef036.bindTooltip(
+            var div_icon_3b846e7f27389b05996eb9678b506359 = L.divIcon({
+  "html": "\n        \u003cdiv style=\"\n            background-color:#2563eb;\n            color:white;\n            min-width:34px;\n            height:34px;\n            padding:0 6px;\n            border-radius:999px;\n            text-align:center;\n            line-height:34px;\n            font-weight:bold;\n            border:3px solid white;\n            box-shadow:0 2px 8px rgba(0,0,0,0.35);\n            font-size:13px;\n            font-family:Arial, sans-serif;\n        \"\u003e\n            6\n        \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+        var popup_6cdc9bb6acb5a686845471d1041eb551 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_19e6917a30a43b2c2a435b444f508cbf = $(`<div id="html_19e6917a30a43b2c2a435b444f508cbf" style="width: 100.0%; height: 100.0%;">Urutan 6: Taman Bekapai</div>`)[0];
+                popup_6cdc9bb6acb5a686845471d1041eb551.setContent(html_19e6917a30a43b2c2a435b444f508cbf);
+            
+        
+
+        marker_7e7128bcd95005082fe07d0591dd30d3.bindPopup(popup_6cdc9bb6acb5a686845471d1041eb551)
+        ;
+
+        
+    
+    
+            marker_7e7128bcd95005082fe07d0591dd30d3.bindTooltip(
                 `<div>
-                     Rute: hotel novotel balikpapan ke smpn 1 balikpapan
+                     Urutan 6: Taman Bekapai
                  </div>`,
                 {
   "sticky": true,
@@ -322,31 +371,18 @@
             );
         
     
-            var poly_line_15e631cfd36038044305f9e25f6f7872 = L.polyline(
-                [[-1.26864, 116.826948], [-1.268697, 116.826925], [-1.268914, 116.82683], [-1.269089, 116.82678], [-1.269343, 116.826708], [-1.26951, 116.82673], [-1.269604, 116.826744], [-1.270005, 116.826824], [-1.27023, 116.826965], [-1.270447, 116.827102], [-1.270663, 116.827264], [-1.270744, 116.82732], [-1.271055, 116.82747], [-1.27123, 116.827536], [-1.271327, 116.827603], [-1.271423, 116.827664], [-1.271531, 116.827884], [-1.271619, 116.827941], [-1.271708, 116.827916], [-1.271772, 116.827782], [-1.271823, 116.827589], [-1.271925, 116.827165], [-1.271987, 116.826661], [-1.272036, 116.826608], [-1.272088, 116.826581], [-1.272173, 116.826525], [-1.272265, 116.826492], [-1.272542, 116.826544], [-1.272918, 116.826628], [-1.272742, 116.827412], [-1.27266, 116.82779], [-1.272617, 116.828031], [-1.272595, 116.828185]],
-                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "red", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.8, "smoothFactor": 1.0, "stroke": true, "weight": 5}
-            ).addTo(map_aedb5e8fc28b1766727b5081adc3b416);
+                marker_7e7128bcd95005082fe07d0591dd30d3.setIcon(div_icon_3b846e7f27389b05996eb9678b506359);
+            
+    
+            var poly_line_3824ee4e4a6d3f41f6a8c4be8c7a0b64 = L.polyline(
+                [[-1.275419, 116.834921], [-1.275136, 116.834924], [-1.275101, 116.834496], [-1.275108, 116.834453], [-1.275134, 116.83442], [-1.275386, 116.834414], [-1.275474, 116.834309], [-1.275462, 116.834304], [-1.275388, 116.83427], [-1.275319, 116.834254], [-1.275152, 116.834242], [-1.274977, 116.834252], [-1.27471, 116.834277], [-1.27453, 116.834261], [-1.274308, 116.834194], [-1.274228, 116.834116], [-1.274089, 116.833994], [-1.27396, 116.833856], [-1.273876, 116.833731], [-1.273822, 116.833606], [-1.2738, 116.833439], [-1.273808, 116.833328], [-1.273893, 116.832944], [-1.273722, 116.832882], [-1.273387, 116.832759], [-1.273091, 116.832647], [-1.272887, 116.832551], [-1.272462, 116.832322], [-1.272281, 116.832286], [-1.272242, 116.832282], [-1.272083, 116.832274], [-1.271875, 116.832278], [-1.271813, 116.832275], [-1.271789, 116.832287], [-1.271741, 116.832297], [-1.271618, 116.832362], [-1.271243, 116.832622], [-1.271176, 116.832678], [-1.271169, 116.832683], [-1.271188, 116.832703], [-1.271247, 116.832761], [-1.271232, 116.832757], [-1.271215, 116.832768], [-1.271211, 116.832787], [-1.27127, 116.832865], [-1.27129, 116.832871], [-1.271305, 116.832865], [-1.27136, 116.832928], [-1.271458, 116.833042], [-1.271483, 116.833082], [-1.271514, 116.833167], [-1.27152, 116.833263], [-1.271452, 116.833653], [-1.27152, 116.833263], [-1.271514, 116.833167], [-1.271483, 116.833082], [-1.271458, 116.833042], [-1.27136, 116.832928], [-1.271305, 116.832865], [-1.271307, 116.832842], [-1.2713, 116.832784], [-1.271304, 116.832732], [-1.271324, 116.832666], [-1.271356, 116.832595], [-1.271369, 116.83257], [-1.271636, 116.832384], [-1.27175, 116.832321], [-1.271789, 116.832287], [-1.271813, 116.832275], [-1.271875, 116.832278], [-1.272083, 116.832274], [-1.272242, 116.832282], [-1.272281, 116.832286], [-1.272462, 116.832322], [-1.272887, 116.832551], [-1.273091, 116.832647], [-1.273059, 116.832735], [-1.272932, 116.832677], [-1.272908, 116.83268], [-1.272888, 116.832694], [-1.272823, 116.832832], [-1.272888, 116.832694], [-1.272908, 116.83268], [-1.272932, 116.832677], [-1.273059, 116.832735], [-1.273091, 116.832647], [-1.273387, 116.832759], [-1.273722, 116.832882], [-1.273893, 116.832944], [-1.274389, 116.833054], [-1.275391, 116.833284], [-1.275556, 116.833322], [-1.276534, 116.833393], [-1.276555, 116.833393], [-1.27711, 116.833403], [-1.277164, 116.833403], [-1.277167, 116.833188], [-1.277175, 116.832854], [-1.277186, 116.832394], [-1.277202, 116.831753], [-1.277208, 116.831523], [-1.277214, 116.831297], [-1.277222, 116.830889], [-1.277234, 116.830444], [-1.277242, 116.830069], [-1.277267, 116.829837], [-1.277277, 116.829689], [-1.277276, 116.829588], [-1.277284, 116.82951], [-1.277327, 116.829164], [-1.277348, 116.82877], [-1.277344, 116.828746], [-1.277348, 116.828622], [-1.277355, 116.82849], [-1.277357, 116.828449], [-1.277386, 116.82818], [-1.277402, 116.828071], [-1.27741, 116.828012], [-1.27742, 116.827904], [-1.277438, 116.827768], [-1.277466, 116.827635], [-1.277471, 116.827587], [-1.277586, 116.826913], [-1.277596, 116.826867], [-1.277637, 116.82669], [-1.27769, 116.826458], [-1.277795, 116.825981], [-1.27773, 116.825967], [-1.277619, 116.826439], [-1.277566, 116.826673], [-1.277517, 116.826889], [-1.277084, 116.826795], [-1.276701, 116.826708], [-1.276564, 116.826651], [-1.276536, 116.826692], [-1.276513, 116.826742], [-1.276507, 116.826795], [-1.276508, 116.82684], [-1.276525, 116.826922], [-1.276542, 116.826961], [-1.276566, 116.827], [-1.27663, 116.827074], [-1.276633, 116.827076], [-1.27663, 116.827074], [-1.276566, 116.827], [-1.276542, 116.826961], [-1.276525, 116.826922], [-1.276508, 116.82684], [-1.276507, 116.826795], [-1.276513, 116.826742], [-1.276536, 116.826692], [-1.276564, 116.826651], [-1.276701, 116.826708], [-1.277084, 116.826795], [-1.277517, 116.826889], [-1.277445, 116.827226], [-1.277383, 116.827557], [-1.277379, 116.82758], [-1.277471, 116.827587], [-1.277586, 116.826913], [-1.277596, 116.826867], [-1.277637, 116.82669], [-1.27769, 116.826458], [-1.277795, 116.825981], [-1.277828, 116.82585], [-1.277837, 116.825802], [-1.277952, 116.825184], [-1.277948, 116.825014], [-1.277967, 116.824934], [-1.278095, 116.824414], [-1.278148, 116.824201], [-1.27821, 116.823918], [-1.278227, 116.823843], [-1.278343, 116.823238], [-1.278411, 116.822883], [-1.278423, 116.822823], [-1.278465, 116.822653], [-1.278561, 116.822268], [-1.27864, 116.821952], [-1.278766, 116.821451], [-1.278778, 116.821397], [-1.2788, 116.821304], [-1.278846, 116.821111], [-1.278853, 116.821076], [-1.279026, 116.820261], [-1.279071, 116.82005], [-1.279092, 116.819956], [-1.279193, 116.819486], [-1.279227, 116.819333], [-1.27924, 116.819268], [-1.279311, 116.818974], [-1.279358, 116.818901], [-1.279378, 116.818817], [-1.279441, 116.818543], [-1.279529, 116.818153], [-1.279594, 116.817878], [-1.279644, 116.817669], [-1.279655, 116.817623], [-1.279801, 116.817654], [-1.279885, 116.817665], [-1.27994, 116.817648], [-1.279978, 116.817615], [-1.280001, 116.817484], [-1.280494, 116.8176], [-1.280001, 116.817484], [-1.280015, 116.817407], [-1.280031, 116.817335], [-1.28005, 116.817248], [-1.280076, 116.817125], [-1.280074, 116.817101], [-1.28005, 116.817084], [-1.279869, 116.817046], [-1.279787, 116.817029], [-1.279702, 116.817008], [-1.279681, 116.817099], [-1.279559, 116.817647], [-1.279364, 116.818525], [-1.279294, 116.818865], [-1.279311, 116.818974], [-1.27924, 116.819268], [-1.279227, 116.819333], [-1.279193, 116.819486], [-1.279092, 116.819956], [-1.279071, 116.82005], [-1.279026, 116.820261], [-1.278853, 116.821076], [-1.278846, 116.821111], [-1.2788, 116.821304], [-1.278778, 116.821397], [-1.278766, 116.821451], [-1.27864, 116.821952], [-1.278561, 116.822268], [-1.278465, 116.822653], [-1.278423, 116.822823], [-1.278411, 116.822883], [-1.278343, 116.823238], [-1.278227, 116.823843], [-1.27821, 116.823918], [-1.278148, 116.824201], [-1.278095, 116.824414], [-1.277967, 116.824934], [-1.277948, 116.825014], [-1.277898, 116.825154], [-1.27773, 116.825967], [-1.277619, 116.826439], [-1.277566, 116.826673], [-1.277517, 116.826889], [-1.277445, 116.827226], [-1.277383, 116.827557], [-1.277379, 116.82758], [-1.27734, 116.827773], [-1.277323, 116.827897], [-1.277307, 116.828007], [-1.277241, 116.828456], [-1.277226, 116.828681], [-1.277223, 116.828737], [-1.277183, 116.829515], [-1.277179, 116.829571], [-1.27717, 116.829733], [-1.277158, 116.831001], [-1.27715, 116.831326], [-1.277147, 116.831522], [-1.277143, 116.831893], [-1.277141, 116.832062], [-1.277139, 116.832257], [-1.277122, 116.832763], [-1.277121, 116.832851], [-1.27711, 116.833403], [-1.276555, 116.833393], [-1.276534, 116.833393], [-1.276536, 116.833519], [-1.276528, 116.833892], [-1.276522, 116.834143], [-1.276519, 116.834349], [-1.276354, 116.834355], [-1.275643, 116.834358], [-1.275545, 116.834337], [-1.275487, 116.834314], [-1.275474, 116.834309], [-1.275386, 116.834414], [-1.275134, 116.83442], [-1.275108, 116.834453], [-1.275101, 116.834496], [-1.275136, 116.834924], [-1.275419, 116.834921]],
+                {"bubblingMouseEvents": true, "color": "#2563eb", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#2563eb", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.85, "smoothFactor": 1.0, "stroke": true, "weight": 5}
+            ).addTo(map_845c664f5c0ef53fdbb4f4a124fa93a8);
         
     
-            poly_line_15e631cfd36038044305f9e25f6f7872.bindTooltip(
+            poly_line_3824ee4e4a6d3f41f6a8c4be8c7a0b64.bindTooltip(
                 `<div>
-                     Rute: smpn 1 balikpapan ke hotel grand senyiur balikpapan
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-            var poly_line_b2f79f9ea31c8db39c87b5f1f74338a4 = L.polyline(
-                [[-1.272595, 116.828185], [-1.27253, 116.82863], [-1.272528, 116.82865], [-1.272526, 116.828668], [-1.272474, 116.829155], [-1.272472, 116.829187], [-1.272463, 116.829432], [-1.272417, 116.830207], [-1.272373, 116.830681], [-1.272307, 116.831448], [-1.272305, 116.831551], [-1.272313, 116.831658], [-1.2723, 116.831815], [-1.272272, 116.831939], [-1.272239, 116.832052], [-1.272462, 116.832322], [-1.272887, 116.832551], [-1.273091, 116.832647], [-1.273387, 116.832759], [-1.273722, 116.832882], [-1.273893, 116.832944], [-1.274389, 116.833054], [-1.275391, 116.833284], [-1.275556, 116.833322], [-1.276534, 116.833393], [-1.276555, 116.833393], [-1.27711, 116.833403], [-1.277164, 116.833403], [-1.277167, 116.833188], [-1.277175, 116.832854], [-1.277186, 116.832394], [-1.277202, 116.831753], [-1.277208, 116.831523], [-1.277214, 116.831297], [-1.277222, 116.830889], [-1.277234, 116.830444], [-1.277242, 116.830069], [-1.277267, 116.829837], [-1.277277, 116.829689], [-1.277276, 116.829588], [-1.277284, 116.82951], [-1.277324, 116.829191]],
-                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "red", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.8, "smoothFactor": 1.0, "stroke": true, "weight": 5}
-            ).addTo(map_aedb5e8fc28b1766727b5081adc3b416);
-        
-    
-            poly_line_b2f79f9ea31c8db39c87b5f1f74338a4.bindTooltip(
-                `<div>
-                     Rute: hotel grand senyiur balikpapan ke taman bekapai
+                     Rute optimal mengikuti jalan
                  </div>`,
                 {
   "sticky": true,
