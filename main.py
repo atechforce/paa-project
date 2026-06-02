@@ -87,10 +87,18 @@ def tampilkan_perbandingan(hasil_dp, hasil_bf):
     print(f"{'Rute Optimal':<22} {rute_dp:<28} {rute_bf:<28}")
     print(f"{'Rute Sama?':<22} {'Ya (V)' if rute_sama else 'Tidak (X)'}")
 
-    # Hitung speedup
-    if hasil_bf["execution_time"] > 0:
-        speedup = hasil_bf["execution_time"] / hasil_dp["execution_time"]
-        print(f"{'Speedup DP':<22} {speedup:.2f}x lebih cepat dari Brute Force")
+    # Hitung speedup dan tentukan yang tercepat
+    print("-" * 75)
+    if hasil_dp["execution_time"] < hasil_bf["execution_time"]:
+        if hasil_dp["execution_time"] > 0:
+            speedup = hasil_bf["execution_time"] / hasil_dp["execution_time"]
+            print(f"KESIMPULAN: Dynamic Programming LEBIH CEPAT {speedup:.2f}x lipat dari Brute Force")
+    elif hasil_bf["execution_time"] < hasil_dp["execution_time"]:
+        if hasil_bf["execution_time"] > 0:
+            speedup = hasil_dp["execution_time"] / hasil_bf["execution_time"]
+            print(f"KESIMPULAN: Brute Force LEBIH CEPAT {speedup:.2f}x lipat dari Dynamic Programming")
+    else:
+        print("KESIMPULAN: Kedua algoritma memiliki waktu eksekusi yang SAMA CEPAT")
 
     print()
 
