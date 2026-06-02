@@ -13,12 +13,12 @@ lokasi = [
 # Koordinat digunakan untuk visualisasi peta Folium.
 # Format: index_lokasi: (latitude, longitude)
 koordinat = {
-    0: (-1.277157, 116.830263),  # Taman Bekapai
-    1: (-1.275529, 116.831518),  # Hotel Novotel Balikpapan
-    2: (-1.271815, 116.829033),  # Hotel Grand Senyiur Balikpapan
-    3: (-1.267323, 116.826620),  # SMPN 1 Balikpapan
+    0: (-1.276809, 116.833898),  # Taman Bekapai
+    1: (-1.275584, 116.834780),  # Hotel Novotel Balikpapan
+    2: (-1.272935, 116.833273),  # Hotel Grand Senyiur Balikpapan
+    3: (-1.271086, 116.833589),  # SMPN 1 Balikpapan
     4: (-1.276620, 116.827100),  # Balikpapan Plaza
-    5: (-1.279250, 116.824550),  # Pantai Kemala
+    5: (-1.281096, 116.817581),  # Pantai Kemala
 }
 
 # Matriks jarak antar lokasi dalam satuan kilometer.
