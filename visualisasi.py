@@ -77,6 +77,361 @@ def buat_marker_angka(label):
     )
 
 
+def tambah_animasi_rute(peta, semua_koordinat_jalan, route_indexes):
+    """
+    Menambahkan animasi marker bergerak pada peta Folium.
+
+    Marker berupa titik merah berpulsa yang bergerak mengikuti
+    seluruh koordinat rute dari titik awal hingga kembali ke titik awal.
+    Termasuk tombol kontrol Play/Pause/Restart dan efek trail.
+
+    Parameter:
+    peta                : objek folium.Map
+    semua_koordinat_jalan: list of (lat, lon) koordinat jalur rute lengkap
+    route_indexes       : list of int, urutan index lokasi pada rute
+    """
+
+    import json
+
+    koordinat_json = json.dumps(semua_koordinat_jalan)
+
+    # Kumpulkan index koordinat yang merupakan titik lokasi (waypoint)
+    # agar animasi bisa menampilkan nama lokasi saat melewati titik tersebut.
+    waypoint_coords = []
+    for idx in route_indexes:
+        lat, lon = koordinat[idx]
+        waypoint_coords.append({
+            "lat": lat,
+            "lon": lon,
+            "nama": lokasi[idx]
+        })
+
+    waypoint_json = json.dumps(waypoint_coords)
+
+    animasi_js = f"""
+    <style>
+        @keyframes pulse-ring {{
+            0%   {{ transform: scale(0.5); opacity: 1; }}
+            100% {{ transform: scale(2.5); opacity: 0; }}
+        }}
+
+        .animasi-marker {{
+            width: 18px;
+            height: 18px;
+            background: #ef4444;
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0 0 12px 4px rgba(239,68,68,0.5);
+            position: relative;
+        }}
+
+        .animasi-marker::before {{
+            content: '';
+            position: absolute;
+            top: -4px;
+            left: -4px;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: rgba(239,68,68,0.4);
+            animation: pulse-ring 1.2s ease-out infinite;
+        }}
+
+        .animasi-trail {{
+            width: 8px;
+            height: 8px;
+            background: rgba(239,68,68,0.5);
+            border-radius: 50%;
+            pointer-events: none;
+        }}
+
+        #animasi-kontrol {{
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            z-index: 9999;
+            background: white;
+            padding: 12px 16px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+            font-family: Arial, sans-serif;
+            font-size: 13px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            min-width: 200px;
+        }}
+
+        #animasi-kontrol button {{
+            padding: 8px 14px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 13px;
+            transition: all 0.2s ease;
+        }}
+
+        #btn-play {{
+            background: #2563eb;
+            color: white;
+        }}
+        #btn-play:hover {{
+            background: #1d4ed8;
+        }}
+
+        #btn-restart {{
+            background: #f3f4f6;
+            color: #374151;
+        }}
+        #btn-restart:hover {{
+            background: #e5e7eb;
+        }}
+
+        #animasi-info {{
+            font-size: 12px;
+            color: #6b7280;
+            text-align: center;
+            min-height: 18px;
+        }}
+
+        #animasi-progress-bar {{
+            width: 100%;
+            height: 6px;
+            background: #e5e7eb;
+            border-radius: 3px;
+            overflow: hidden;
+        }}
+
+        #animasi-progress-fill {{
+            height: 100%;
+            background: linear-gradient(90deg, #2563eb, #ef4444);
+            border-radius: 3px;
+            width: 0%;
+            transition: width 0.1s linear;
+        }}
+
+        #speed-kontrol {{
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            color: #6b7280;
+        }}
+
+        #speed-kontrol input {{
+            flex: 1;
+        }}
+    </style>
+
+    <div id="animasi-kontrol">
+        <b>🚗 Animasi Rute</b>
+        <div id="animasi-progress-bar">
+            <div id="animasi-progress-fill"></div>
+        </div>
+        <div id="animasi-info">Tekan Play untuk mulai</div>
+        <div id="speed-kontrol">
+            <span>Lambat</span>
+            <input type="range" id="speed-slider" min="1" max="10" value="5">
+            <span>Cepat</span>
+        </div>
+        <div style="display:flex; gap:8px;">
+            <button id="btn-play" onclick="toggleAnimasi()">▶ Play</button>
+            <button id="btn-restart" onclick="restartAnimasi()">↻ Restart</button>
+        </div>
+    </div>
+
+    <script>
+    window.addEventListener('load', function() {{
+        var ruteKoordinat = {koordinat_json};
+        var waypoints = {waypoint_json};
+
+        var mapObj = null;
+        // Cari objek peta Leaflet yang sudah dibuat oleh Folium
+        for (var key in window) {{
+            if (window[key] instanceof L.Map) {{
+                mapObj = window[key];
+                break;
+            }}
+        }}
+
+        if (!mapObj) {{
+            console.error("Objek peta Leaflet tidak ditemukan.");
+            return;
+        }}
+
+        var animasiMarker = null;
+        var trailMarkers = [];
+        var currentIndex = 0;
+        var isPlaying = false;
+        var animasiInterval = null;
+        var MAX_TRAIL = 25;
+
+        // Buat icon animasi
+        var animasiIcon = L.divIcon({{
+            html: '<div class="animasi-marker"></div>',
+            className: 'animasi-marker-container',
+            iconSize: [18, 18],
+            iconAnchor: [9, 9]
+        }});
+
+        var trailIcon = L.divIcon({{
+            html: '<div class="animasi-trail"></div>',
+            className: '',
+            iconSize: [8, 8],
+            iconAnchor: [4, 4]
+        }});
+
+        // Inisialisasi marker di titik awal
+        if (ruteKoordinat.length > 0) {{
+            animasiMarker = L.marker(ruteKoordinat[0], {{
+                icon: animasiIcon,
+                zIndexOffset: 1000
+            }}).addTo(mapObj);
+        }}
+
+        function getSpeed() {{
+            var slider = document.getElementById('speed-slider');
+            var val = parseInt(slider.value);
+            // Semakin besar slider, semakin cepat (interval lebih kecil)
+            return Math.max(10, 120 - (val * 12));
+        }}
+
+        function cekWaypoint(lat, lon) {{
+            for (var i = 0; i < waypoints.length; i++) {{
+                var wp = waypoints[i];
+                var dist = Math.sqrt(
+                    Math.pow(lat - wp.lat, 2) + Math.pow(lon - wp.lon, 2)
+                );
+                if (dist < 0.0003) {{
+                    return wp.nama;
+                }}
+            }}
+            return null;
+        }}
+
+        function updateProgress() {{
+            var persen = (currentIndex / (ruteKoordinat.length - 1)) * 100;
+            document.getElementById('animasi-progress-fill').style.width = persen + '%';
+        }}
+
+        function tambahTrail(latlng) {{
+            var trail = L.marker(latlng, {{
+                icon: trailIcon,
+                interactive: false,
+                zIndexOffset: 500
+            }}).addTo(mapObj);
+
+            trailMarkers.push(trail);
+
+            // Batasi jumlah trail agar tidak berat
+            if (trailMarkers.length > MAX_TRAIL) {{
+                var old = trailMarkers.shift();
+                mapObj.removeLayer(old);
+            }}
+        }}
+
+        function langkahAnimasi() {{
+            if (currentIndex >= ruteKoordinat.length - 1) {{
+                // Animasi selesai
+                pauseAnimasi();
+                document.getElementById('animasi-info').innerHTML =
+                    '✅ Selesai! Kurir kembali ke titik awal.';
+                document.getElementById('btn-play').innerHTML = '▶ Play';
+                document.getElementById('animasi-progress-fill').style.width = '100%';
+                return;
+            }}
+
+            currentIndex++;
+            var pos = ruteKoordinat[currentIndex];
+            animasiMarker.setLatLng(pos);
+
+            // Tambah trail setiap beberapa langkah
+            if (currentIndex % 3 === 0) {{
+                tambahTrail(pos);
+            }}
+
+            updateProgress();
+
+            // Cek apakah sampai di waypoint
+            var namaLokasi = cekWaypoint(pos[0], pos[1]);
+            if (namaLokasi) {{
+                document.getElementById('animasi-info').innerHTML =
+                    '📍 Melewati: <b>' + namaLokasi + '</b>';
+            }}
+        }}
+
+        function startAnimasi() {{
+            if (isPlaying) return;
+            isPlaying = true;
+
+            animasiInterval = setInterval(function() {{
+                langkahAnimasi();
+            }}, getSpeed());
+
+            // Update speed secara dinamis
+            document.getElementById('speed-slider').addEventListener('input', function() {{
+                if (isPlaying) {{
+                    clearInterval(animasiInterval);
+                    animasiInterval = setInterval(function() {{
+                        langkahAnimasi();
+                    }}, getSpeed());
+                }}
+            }});
+        }}
+
+        function pauseAnimasi() {{
+            isPlaying = false;
+            if (animasiInterval) {{
+                clearInterval(animasiInterval);
+                animasiInterval = null;
+            }}
+        }}
+
+        function hapusTrail() {{
+            for (var i = 0; i < trailMarkers.length; i++) {{
+                mapObj.removeLayer(trailMarkers[i]);
+            }}
+            trailMarkers = [];
+        }}
+
+        // Fungsi global untuk tombol
+        window.toggleAnimasi = function() {{
+            if (isPlaying) {{
+                pauseAnimasi();
+                document.getElementById('btn-play').innerHTML = '▶ Play';
+                document.getElementById('animasi-info').innerHTML = '⏸ Dijeda';
+            }} else {{
+                // Jika sudah selesai, restart dulu
+                if (currentIndex >= ruteKoordinat.length - 1) {{
+                    currentIndex = 0;
+                    animasiMarker.setLatLng(ruteKoordinat[0]);
+                    hapusTrail();
+                    updateProgress();
+                }}
+
+                startAnimasi();
+                document.getElementById('btn-play').innerHTML = '⏸ Pause';
+                document.getElementById('animasi-info').innerHTML = '🚗 Sedang berjalan...';
+            }}
+        }};
+
+        window.restartAnimasi = function() {{
+            pauseAnimasi();
+            currentIndex = 0;
+            animasiMarker.setLatLng(ruteKoordinat[0]);
+            hapusTrail();
+            updateProgress();
+            document.getElementById('btn-play').innerHTML = '▶ Play';
+            document.getElementById('animasi-info').innerHTML = 'Tekan Play untuk mulai';
+        }};
+    }});
+    </script>
+    """
+
+    peta.get_root().html.add_child(folium.Element(animasi_js))
+
+
 def buat_peta_rute(hasil, nama_file="peta_rute_tsp.html", buka_browser=False):
     """
     Membuat file HTML berisi peta rute optimal.
@@ -187,6 +542,15 @@ def buat_peta_rute(hasil, nama_file="peta_rute_tsp.html", buka_browser=False):
         opacity=0.85,
         tooltip="Rute optimal mengikuti jalan"
     ).add_to(peta)
+
+    # ==========================================================
+    # ANIMASI MARKER BERGERAK
+    # ==========================================================
+    # Menambahkan animasi titik merah berpulsa yang bergerak
+    # mengikuti seluruh koordinat rute dari awal hingga kembali.
+    # ==========================================================
+
+    tambah_animasi_rute(peta, semua_koordinat_jalan, route_indexes)
 
     # Tambahkan keterangan kecil
     legenda_html = """
