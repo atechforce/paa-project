@@ -81,6 +81,45 @@ def input_titik_awal():
             print("Input harus berupa angka.")
 
 
+def input_kecepatan():
+    """Meminta input kecepatan salesman dalam km/jam."""
+    while True:
+        pilihan = input("Masukkan kecepatan salesman (km/jam), default 40: ").strip()
+
+        if pilihan == "":
+            return 40.0
+
+        try:
+            kecepatan = float(pilihan)
+            if kecepatan > 0:
+                return kecepatan
+            print("Kecepatan harus lebih dari 0.")
+        except ValueError:
+            print("Input harus berupa angka.")
+
+
+def tampilkan_estimasi_waktu(total_jarak, kecepatan):
+    """Menghitung dan menampilkan estimasi waktu tempuh salesman."""
+    waktu_jam = total_jarak / kecepatan
+    waktu_menit = waktu_jam * 60
+
+    jam = int(waktu_menit // 60)
+    menit = int(waktu_menit % 60)
+    detik = int((waktu_menit % 1) * 60)
+
+    print("=== ESTIMASI WAKTU TEMPUH ===")
+    print(f"Total Jarak       : {total_jarak:.2f} km")
+    print(f"Kecepatan         : {kecepatan:.1f} km/jam")
+    print(f"Estimasi Waktu    : {waktu_jam:.4f} jam ({waktu_menit:.2f} menit)")
+
+    if jam > 0:
+        print(f"                  : {jam} jam {menit} menit {detik} detik")
+    else:
+        print(f"                  : {menit} menit {detik} detik")
+
+    print()
+
+
 def main():
     print("==============================================")
     print(" TSP Dynamic Programming - Rute Pengantaran")
@@ -99,7 +138,12 @@ def main():
     tampilkan_memo(hasil)
     # tampilkan_langkah(hasil)
     print(f"Jumlah state DP yang dihitung: {hasil['state_count']}")
+    print()
 
+    kecepatan = input_kecepatan()
+    print()
+
+    tampilkan_estimasi_waktu(hasil["minimum_distance"], kecepatan)
 
     buat_visualisasi = input("Buat visualisasi peta HTML? (y/n): ").strip().lower()
     if buat_visualisasi == "y":
