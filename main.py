@@ -1,8 +1,9 @@
 # main.py
-# Program utama TSP Dynamic Programming untuk tugas akhir PPA.
+# Program utama TSP Dynamic Programming & Brute Force untuk tugas akhir PPA.
 
 from maps import lokasi, matriks_jarak
 from tsp_dp import solve_tsp_dp
+from tsp_bf import solve_tsp_bf
 from visualisasi import buat_peta_rute
 
 
@@ -23,8 +24,10 @@ def tampilkan_matriks():
     print()
 
 
-def tampilkan_hasil(hasil):
-    print("=== HASIL RUTE OPTIMAL ===")
+def tampilkan_hasil(hasil, label=""):
+    prefix = f" ({label})" if label else ""
+    print(f"=== HASIL RUTE OPTIMAL{prefix} ===")
+    print(f"Algoritma         : {hasil.get('algorithm', 'Dynamic Programming')}")
     print(f"Titik Awal        : {hasil['start_location']}")
     print(f"Rute Optimal      : {' -> '.join(hasil['route_names'])}")
     print(f"Total Jarak       : {hasil['minimum_distance']:.2f} km")
@@ -63,6 +66,33 @@ def tampilkan_memo(hasil, batas=20):
     # if len(hasil["steps"]) > batas:
     #     print(f"... {len(hasil['steps']) - batas} langkah lainnya tidak ditampilkan.")
     # print()
+
+
+def tampilkan_perbandingan(hasil_dp, hasil_bf):
+    """Menampilkan tabel perbandingan antara algoritma DP dan Brute Force."""
+    print("=" * 75)
+    print("              PERBANDINGAN ALGORITMA DP vs BRUTE FORCE")
+    print("=" * 75)
+
+    rute_dp = " -> ".join([f"L{i}" for i in hasil_dp["route_indexes"]])
+    rute_bf = " -> ".join([f"L{i}" for i in hasil_bf["route_indexes"]])
+
+    rute_sama = hasil_dp["route_indexes"] == hasil_bf["route_indexes"]
+
+    print(f"{'Kriteria':<22} {'Dynamic Programming':<28} {'Brute Force':<28}")
+    print("-" * 75)
+    print(f"{'Total Jarak':<22} {hasil_dp['minimum_distance']:<28.2f} {hasil_bf['minimum_distance']:<28.2f}")
+    print(f"{'Waktu Eksekusi':<22} {hasil_dp['execution_time']:<28.8f} {hasil_bf['execution_time']:<28.8f}")
+    print(f"{'Jumlah Operasi':<22} {str(hasil_dp['state_count']) + ' state':<28} {str(hasil_bf['total_permutations']) + ' permutasi':<28}")
+    print(f"{'Rute Optimal':<22} {rute_dp:<28} {rute_bf:<28}")
+    print(f"{'Rute Sama?':<22} {'Ya (V)' if rute_sama else 'Tidak (X)'}")
+
+    # Hitung speedup
+    if hasil_bf["execution_time"] > 0:
+        speedup = hasil_bf["execution_time"] / hasil_dp["execution_time"]
+        print(f"{'Speedup DP':<22} {speedup:.2f}x lebih cepat dari Brute Force")
+
+    print()
 
 
 def input_titik_awal():
@@ -122,7 +152,8 @@ def tampilkan_estimasi_waktu(total_jarak, kecepatan):
 
 def main():
     print("==============================================")
-    print(" TSP Dynamic Programming - Rute Pengantaran")
+    print(" TSP - Rute Pengantaran Optimal")
+    print(" Dynamic Programming vs Brute Force")
     print("==============================================")
     print()
 
@@ -132,23 +163,40 @@ def main():
     start_index = input_titik_awal()
     print()
 
-    hasil = solve_tsp_dp(lokasi, matriks_jarak, start_index=start_index)
-
-    tampilkan_hasil(hasil)
-    tampilkan_memo(hasil)
-    # tampilkan_langkah(hasil)
-    print(f"Jumlah state DP yang dihitung: {hasil['state_count']}")
+    # === Jalankan algoritma Dynamic Programming ===
+    print("Menjalankan algoritma Dynamic Programming...")
+    hasil_dp = solve_tsp_dp(lokasi, matriks_jarak, start_index=start_index)
+    hasil_dp["algorithm"] = "Dynamic Programming"
+    tampilkan_hasil(hasil_dp, "Dynamic Programming")
+    tampilkan_memo(hasil_dp)
+    print(f"Jumlah state DP yang dihitung: {hasil_dp['state_count']}")
     print()
 
+    # === Jalankan algoritma Brute Force ===
+    print("Menjalankan algoritma Brute Force...")
+    hasil_bf = solve_tsp_bf(lokasi, matriks_jarak, start_index=start_index)
+    tampilkan_hasil(hasil_bf, "Brute Force")
+    print(f"Jumlah permutasi yang dievaluasi: {hasil_bf['total_permutations']}")
+    print()
+
+    # === Tampilkan perbandingan ===
+    tampilkan_perbandingan(hasil_dp, hasil_bf)
+
+    # === Input kecepatan dan estimasi waktu ===
     kecepatan = input_kecepatan()
     print()
 
-    tampilkan_estimasi_waktu(hasil["minimum_distance"], kecepatan)
+    tampilkan_estimasi_waktu(hasil_dp["minimum_distance"], kecepatan)
 
+    # === Visualisasi ===
     buat_visualisasi = input("Buat visualisasi peta HTML? (y/n): ").strip().lower()
     if buat_visualisasi == "y":
         try:
-            nama_file = buat_peta_rute(hasil, buka_browser=True)
+            nama_file = buat_peta_rute(
+                hasil_dp,
+                hasil_bf=hasil_bf,
+                buka_browser=True
+            )
             print(f"Peta berhasil dibuat: {nama_file}")
         except ImportError as error:
             print(error)
@@ -156,3 +204,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
