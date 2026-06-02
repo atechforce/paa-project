@@ -17,7 +17,7 @@
             <meta name="viewport" content="width=device-width,
                 initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
             <style>
-                #map_845c664f5c0ef53fdbb4f4a124fa93a8 {
+                #map_57184f398f92201e04aa0a44174c9a00 {
                     position: relative;
                     width: 100.0%;
                     height: 100.0%;
@@ -54,6 +54,326 @@
 <body>
     
     
+    <style>
+        @keyframes pulse-ring {
+            0%   { transform: scale(0.5); opacity: 1; }
+            100% { transform: scale(2.5); opacity: 0; }
+        }
+
+        .animasi-marker {
+            width: 18px;
+            height: 18px;
+            background: #ef4444;
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0 0 12px 4px rgba(239,68,68,0.5);
+            position: relative;
+        }
+
+        .animasi-marker::before {
+            content: '';
+            position: absolute;
+            top: -4px;
+            left: -4px;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: rgba(239,68,68,0.4);
+            animation: pulse-ring 1.2s ease-out infinite;
+        }
+
+        .animasi-trail {
+            width: 8px;
+            height: 8px;
+            background: rgba(239,68,68,0.5);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        #animasi-kontrol {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            z-index: 9999;
+            background: white;
+            padding: 12px 16px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+            font-family: Arial, sans-serif;
+            font-size: 13px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            min-width: 200px;
+        }
+
+        #animasi-kontrol button {
+            padding: 8px 14px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 13px;
+            transition: all 0.2s ease;
+        }
+
+        #btn-play {
+            background: #2563eb;
+            color: white;
+        }
+        #btn-play:hover {
+            background: #1d4ed8;
+        }
+
+        #btn-restart {
+            background: #f3f4f6;
+            color: #374151;
+        }
+        #btn-restart:hover {
+            background: #e5e7eb;
+        }
+
+        #animasi-info {
+            font-size: 12px;
+            color: #6b7280;
+            text-align: center;
+            min-height: 18px;
+        }
+
+        #animasi-progress-bar {
+            width: 100%;
+            height: 6px;
+            background: #e5e7eb;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        #animasi-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #2563eb, #ef4444);
+            border-radius: 3px;
+            width: 0%;
+            transition: width 0.1s linear;
+        }
+
+        #speed-kontrol {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            color: #6b7280;
+        }
+
+        #speed-kontrol input {
+            flex: 1;
+        }
+    </style>
+
+    <div id="animasi-kontrol">
+        <b>🚗 Animasi Rute</b>
+        <div id="animasi-progress-bar">
+            <div id="animasi-progress-fill"></div>
+        </div>
+        <div id="animasi-info">Tekan Play untuk mulai</div>
+        <div id="speed-kontrol">
+            <span>Lambat</span>
+            <input type="range" id="speed-slider" min="1" max="10" value="5">
+            <span>Cepat</span>
+        </div>
+        <div style="display:flex; gap:8px;">
+            <button id="btn-play" onclick="toggleAnimasi()">▶ Play</button>
+            <button id="btn-restart" onclick="restartAnimasi()">↻ Restart</button>
+        </div>
+    </div>
+
+    <script>
+    window.addEventListener('load', function() {
+        var ruteKoordinat = [[-1.272823, 116.832832], [-1.272888, 116.832694], [-1.272908, 116.83268], [-1.272932, 116.832677], [-1.273059, 116.832735], [-1.273091, 116.832647], [-1.273387, 116.832759], [-1.273722, 116.832882], [-1.273893, 116.832944], [-1.274389, 116.833054], [-1.275391, 116.833284], [-1.275556, 116.833322], [-1.276534, 116.833393], [-1.276536, 116.833519], [-1.276528, 116.833892], [-1.276536, 116.833519], [-1.276534, 116.833393], [-1.276555, 116.833393], [-1.27711, 116.833403], [-1.277164, 116.833403], [-1.277167, 116.833188], [-1.277175, 116.832854], [-1.277186, 116.832394], [-1.277202, 116.831753], [-1.277208, 116.831523], [-1.277214, 116.831297], [-1.277222, 116.830889], [-1.277234, 116.830444], [-1.277242, 116.830069], [-1.277267, 116.829837], [-1.277277, 116.829689], [-1.277276, 116.829588], [-1.277284, 116.82951], [-1.277327, 116.829164], [-1.277348, 116.82877], [-1.277344, 116.828746], [-1.277348, 116.828622], [-1.277355, 116.82849], [-1.277357, 116.828449], [-1.277386, 116.82818], [-1.277402, 116.828071], [-1.27741, 116.828012], [-1.27742, 116.827904], [-1.277438, 116.827768], [-1.277466, 116.827635], [-1.277471, 116.827587], [-1.277586, 116.826913], [-1.277596, 116.826867], [-1.277637, 116.82669], [-1.27769, 116.826458], [-1.277795, 116.825981], [-1.277828, 116.82585], [-1.277837, 116.825802], [-1.277952, 116.825184], [-1.277948, 116.825014], [-1.277967, 116.824934], [-1.278095, 116.824414], [-1.278148, 116.824201], [-1.27821, 116.823918], [-1.278227, 116.823843], [-1.278343, 116.823238], [-1.278411, 116.822883], [-1.278423, 116.822823], [-1.278465, 116.822653], [-1.278561, 116.822268], [-1.27864, 116.821952], [-1.278766, 116.821451], [-1.278778, 116.821397], [-1.2788, 116.821304], [-1.278846, 116.821111], [-1.278853, 116.821076], [-1.279026, 116.820261], [-1.279071, 116.82005], [-1.279092, 116.819956], [-1.279193, 116.819486], [-1.279227, 116.819333], [-1.27924, 116.819268], [-1.279311, 116.818974], [-1.279358, 116.818901], [-1.279378, 116.818817], [-1.279441, 116.818543], [-1.279529, 116.818153], [-1.279594, 116.817878], [-1.279644, 116.817669], [-1.279655, 116.817623], [-1.279801, 116.817654], [-1.279885, 116.817665], [-1.27994, 116.817648], [-1.279978, 116.817615], [-1.280001, 116.817484], [-1.280494, 116.8176], [-1.280001, 116.817484], [-1.280015, 116.817407], [-1.280031, 116.817335], [-1.28005, 116.817248], [-1.280076, 116.817125], [-1.280074, 116.817101], [-1.28005, 116.817084], [-1.279869, 116.817046], [-1.279787, 116.817029], [-1.279702, 116.817008], [-1.279681, 116.817099], [-1.279559, 116.817647], [-1.279364, 116.818525], [-1.279294, 116.818865], [-1.279311, 116.818974], [-1.27924, 116.819268], [-1.279227, 116.819333], [-1.279193, 116.819486], [-1.279092, 116.819956], [-1.279071, 116.82005], [-1.279026, 116.820261], [-1.278853, 116.821076], [-1.278846, 116.821111], [-1.2788, 116.821304], [-1.278778, 116.821397], [-1.278766, 116.821451], [-1.27864, 116.821952], [-1.278561, 116.822268], [-1.278465, 116.822653], [-1.278423, 116.822823], [-1.278411, 116.822883], [-1.278343, 116.823238], [-1.278227, 116.823843], [-1.27821, 116.823918], [-1.278148, 116.824201], [-1.278095, 116.824414], [-1.277967, 116.824934], [-1.277948, 116.825014], [-1.277898, 116.825154], [-1.27773, 116.825967], [-1.277619, 116.826439], [-1.277566, 116.826673], [-1.277517, 116.826889], [-1.277084, 116.826795], [-1.276701, 116.826708], [-1.276564, 116.826651], [-1.276536, 116.826692], [-1.276513, 116.826742], [-1.276507, 116.826795], [-1.276508, 116.82684], [-1.276525, 116.826922], [-1.276542, 116.826961], [-1.276566, 116.827], [-1.27663, 116.827074], [-1.276633, 116.827076], [-1.27663, 116.827074], [-1.276566, 116.827], [-1.276542, 116.826961], [-1.276525, 116.826922], [-1.276508, 116.82684], [-1.276507, 116.826795], [-1.276513, 116.826742], [-1.276536, 116.826692], [-1.276564, 116.826651], [-1.276701, 116.826708], [-1.277084, 116.826795], [-1.277517, 116.826889], [-1.277445, 116.827226], [-1.277383, 116.827557], [-1.277379, 116.82758], [-1.27734, 116.827773], [-1.277323, 116.827897], [-1.277307, 116.828007], [-1.277241, 116.828456], [-1.277226, 116.828681], [-1.277223, 116.828737], [-1.277183, 116.829515], [-1.277179, 116.829571], [-1.27717, 116.829733], [-1.277158, 116.831001], [-1.27715, 116.831326], [-1.277147, 116.831522], [-1.277143, 116.831893], [-1.277141, 116.832062], [-1.277139, 116.832257], [-1.277122, 116.832763], [-1.277121, 116.832851], [-1.27711, 116.833403], [-1.277106, 116.834012], [-1.277103, 116.834111], [-1.277097, 116.834333], [-1.276519, 116.834349], [-1.276354, 116.834355], [-1.275643, 116.834358], [-1.275545, 116.834337], [-1.275487, 116.834314], [-1.275474, 116.834309], [-1.275386, 116.834414], [-1.275134, 116.83442], [-1.275108, 116.834453], [-1.275101, 116.834496], [-1.275136, 116.834924], [-1.275419, 116.834921], [-1.275136, 116.834924], [-1.275101, 116.834496], [-1.275108, 116.834453], [-1.275134, 116.83442], [-1.275386, 116.834414], [-1.275474, 116.834309], [-1.275462, 116.834304], [-1.275388, 116.83427], [-1.275319, 116.834254], [-1.275152, 116.834242], [-1.274977, 116.834252], [-1.27471, 116.834277], [-1.27453, 116.834261], [-1.274308, 116.834194], [-1.274228, 116.834116], [-1.274089, 116.833994], [-1.27396, 116.833856], [-1.273876, 116.833731], [-1.273822, 116.833606], [-1.2738, 116.833439], [-1.273808, 116.833328], [-1.273893, 116.832944], [-1.273722, 116.832882], [-1.273387, 116.832759], [-1.273091, 116.832647], [-1.272887, 116.832551], [-1.272462, 116.832322], [-1.272281, 116.832286], [-1.272242, 116.832282], [-1.272083, 116.832274], [-1.271875, 116.832278], [-1.271813, 116.832275], [-1.271789, 116.832287], [-1.271741, 116.832297], [-1.271618, 116.832362], [-1.271243, 116.832622], [-1.271176, 116.832678], [-1.271169, 116.832683], [-1.271188, 116.832703], [-1.271247, 116.832761], [-1.271232, 116.832757], [-1.271215, 116.832768], [-1.271211, 116.832787], [-1.27127, 116.832865], [-1.27129, 116.832871], [-1.271305, 116.832865], [-1.27136, 116.832928], [-1.271458, 116.833042], [-1.271483, 116.833082], [-1.271514, 116.833167], [-1.27152, 116.833263], [-1.271452, 116.833653], [-1.27152, 116.833263], [-1.271514, 116.833167], [-1.271483, 116.833082], [-1.271458, 116.833042], [-1.27136, 116.832928], [-1.271305, 116.832865], [-1.271307, 116.832842], [-1.2713, 116.832784], [-1.271304, 116.832732], [-1.271324, 116.832666], [-1.271356, 116.832595], [-1.271369, 116.83257], [-1.271636, 116.832384], [-1.27175, 116.832321], [-1.271789, 116.832287], [-1.271813, 116.832275], [-1.271875, 116.832278], [-1.272083, 116.832274], [-1.272242, 116.832282], [-1.272281, 116.832286], [-1.272462, 116.832322], [-1.272887, 116.832551], [-1.273091, 116.832647], [-1.273059, 116.832735], [-1.272932, 116.832677], [-1.272908, 116.83268], [-1.272888, 116.832694], [-1.272823, 116.832832]];
+        var waypoints = [{"lat": -1.272935, "lon": 116.833273, "nama": "Hotel Grand Senyiur Balikpapan"}, {"lat": -1.276809, "lon": 116.833898, "nama": "Taman Bekapai"}, {"lat": -1.281096, "lon": 116.817581, "nama": "Pantai Kemala"}, {"lat": -1.27662, "lon": 116.8271, "nama": "Balikpapan Plaza"}, {"lat": -1.275584, "lon": 116.83478, "nama": "Hotel Novotel Balikpapan"}, {"lat": -1.271086, "lon": 116.833589, "nama": "SMPN 1 Balikpapan"}, {"lat": -1.272935, "lon": 116.833273, "nama": "Hotel Grand Senyiur Balikpapan"}];
+
+        var mapObj = null;
+        // Cari objek peta Leaflet yang sudah dibuat oleh Folium
+        for (var key in window) {
+            if (window[key] instanceof L.Map) {
+                mapObj = window[key];
+                break;
+            }
+        }
+
+        if (!mapObj) {
+            console.error("Objek peta Leaflet tidak ditemukan.");
+            return;
+        }
+
+        var animasiMarker = null;
+        var trailMarkers = [];
+        var currentIndex = 0;
+        var isPlaying = false;
+        var animasiInterval = null;
+        var MAX_TRAIL = 25;
+
+        // Buat icon animasi
+        var animasiIcon = L.divIcon({
+            html: '<div class="animasi-marker"></div>',
+            className: 'animasi-marker-container',
+            iconSize: [18, 18],
+            iconAnchor: [9, 9]
+        });
+
+        var trailIcon = L.divIcon({
+            html: '<div class="animasi-trail"></div>',
+            className: '',
+            iconSize: [8, 8],
+            iconAnchor: [4, 4]
+        });
+
+        // Inisialisasi marker di titik awal
+        if (ruteKoordinat.length > 0) {
+            animasiMarker = L.marker(ruteKoordinat[0], {
+                icon: animasiIcon,
+                zIndexOffset: 1000
+            }).addTo(mapObj);
+        }
+
+        function getSpeed() {
+            var slider = document.getElementById('speed-slider');
+            var val = parseInt(slider.value);
+            // Semakin besar slider, semakin cepat (interval lebih kecil)
+            return Math.max(10, 120 - (val * 12));
+        }
+
+        function cekWaypoint(lat, lon) {
+            for (var i = 0; i < waypoints.length; i++) {
+                var wp = waypoints[i];
+                var dist = Math.sqrt(
+                    Math.pow(lat - wp.lat, 2) + Math.pow(lon - wp.lon, 2)
+                );
+                if (dist < 0.0003) {
+                    return wp.nama;
+                }
+            }
+            return null;
+        }
+
+        function updateProgress() {
+            var persen = (currentIndex / (ruteKoordinat.length - 1)) * 100;
+            document.getElementById('animasi-progress-fill').style.width = persen + '%';
+        }
+
+        function tambahTrail(latlng) {
+            var trail = L.marker(latlng, {
+                icon: trailIcon,
+                interactive: false,
+                zIndexOffset: 500
+            }).addTo(mapObj);
+
+            trailMarkers.push(trail);
+
+            // Batasi jumlah trail agar tidak berat
+            if (trailMarkers.length > MAX_TRAIL) {
+                var old = trailMarkers.shift();
+                mapObj.removeLayer(old);
+            }
+        }
+
+        function langkahAnimasi() {
+            if (currentIndex >= ruteKoordinat.length - 1) {
+                // Animasi selesai
+                pauseAnimasi();
+                document.getElementById('animasi-info').innerHTML =
+                    '✅ Selesai! Kurir kembali ke titik awal.';
+                document.getElementById('btn-play').innerHTML = '▶ Play';
+                document.getElementById('animasi-progress-fill').style.width = '100%';
+                return;
+            }
+
+            currentIndex++;
+            var pos = ruteKoordinat[currentIndex];
+            animasiMarker.setLatLng(pos);
+
+            // Tambah trail setiap beberapa langkah
+            if (currentIndex % 3 === 0) {
+                tambahTrail(pos);
+            }
+
+            updateProgress();
+
+            // Cek apakah sampai di waypoint
+            var namaLokasi = cekWaypoint(pos[0], pos[1]);
+            if (namaLokasi) {
+                document.getElementById('animasi-info').innerHTML =
+                    '📍 Melewati: <b>' + namaLokasi + '</b>';
+            }
+        }
+
+        function startAnimasi() {
+            if (isPlaying) return;
+            isPlaying = true;
+
+            animasiInterval = setInterval(function() {
+                langkahAnimasi();
+            }, getSpeed());
+
+            // Update speed secara dinamis
+            document.getElementById('speed-slider').addEventListener('input', function() {
+                if (isPlaying) {
+                    clearInterval(animasiInterval);
+                    animasiInterval = setInterval(function() {
+                        langkahAnimasi();
+                    }, getSpeed());
+                }
+            });
+        }
+
+        function pauseAnimasi() {
+            isPlaying = false;
+            if (animasiInterval) {
+                clearInterval(animasiInterval);
+                animasiInterval = null;
+            }
+        }
+
+        function hapusTrail() {
+            for (var i = 0; i < trailMarkers.length; i++) {
+                mapObj.removeLayer(trailMarkers[i]);
+            }
+            trailMarkers = [];
+        }
+
+        // Fungsi global untuk tombol
+        window.toggleAnimasi = function() {
+            if (isPlaying) {
+                pauseAnimasi();
+                document.getElementById('btn-play').innerHTML = '▶ Play';
+                document.getElementById('animasi-info').innerHTML = '⏸ Dijeda';
+            } else {
+                // Jika sudah selesai, restart dulu
+                if (currentIndex >= ruteKoordinat.length - 1) {
+                    currentIndex = 0;
+                    animasiMarker.setLatLng(ruteKoordinat[0]);
+                    hapusTrail();
+                    updateProgress();
+                }
+
+                startAnimasi();
+                document.getElementById('btn-play').innerHTML = '⏸ Pause';
+                document.getElementById('animasi-info').innerHTML = '🚗 Sedang berjalan...';
+            }
+        };
+
+        window.restartAnimasi = function() {
+            pauseAnimasi();
+            currentIndex = 0;
+            animasiMarker.setLatLng(ruteKoordinat[0]);
+            hapusTrail();
+            updateProgress();
+            document.getElementById('btn-play').innerHTML = '▶ Play';
+            document.getElementById('animasi-info').innerHTML = 'Tekan Play untuk mulai';
+        };
+    });
+    </script>
+    
+    
     <div style="
         position: fixed;
         bottom: 25px;
@@ -72,16 +392,16 @@
     </div>
     
     
-            <div class="folium-map" id="map_845c664f5c0ef53fdbb4f4a124fa93a8" ></div>
+            <div class="folium-map" id="map_57184f398f92201e04aa0a44174c9a00" ></div>
         
 </body>
 <script>
     
     
-            var map_845c664f5c0ef53fdbb4f4a124fa93a8 = L.map(
-                "map_845c664f5c0ef53fdbb4f4a124fa93a8",
+            var map_57184f398f92201e04aa0a44174c9a00 = L.map(
+                "map_57184f398f92201e04aa0a44174c9a00",
                 {
-                    center: [-1.275584, 116.83478],
+                    center: [-1.272935, 116.833273],
                     crs: L.CRS.EPSG3857,
                     ...{
   "zoom": 14,
@@ -96,7 +416,7 @@
 
         
     
-            var tile_layer_2155bfeefa35326ae3789b02b7011e4f = L.tileLayer(
+            var tile_layer_3088d898226a506675fb71b3264e77ee = L.tileLayer(
                 "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
                 {
   "minZoom": 0,
@@ -113,42 +433,42 @@
             );
         
     
-            tile_layer_2155bfeefa35326ae3789b02b7011e4f.addTo(map_845c664f5c0ef53fdbb4f4a124fa93a8);
+            tile_layer_3088d898226a506675fb71b3264e77ee.addTo(map_57184f398f92201e04aa0a44174c9a00);
         
     
-            var marker_bb7ac34939ded63acc5bf998a4ca529a = L.marker(
-                [-1.275584, 116.83478],
+            var marker_5af3deb8e1f4b8443eabd4c618b96cf8 = L.marker(
+                [-1.272935, 116.833273],
                 {
 }
-            ).addTo(map_845c664f5c0ef53fdbb4f4a124fa93a8);
+            ).addTo(map_57184f398f92201e04aa0a44174c9a00);
         
     
-            var div_icon_545489eaeb04c1660b48b38407979d85 = L.divIcon({
+            var div_icon_de92abf08f1163cf42aefe3230ad5ccd = L.divIcon({
   "html": "\n        \u003cdiv style=\"\n            background-color:#2563eb;\n            color:white;\n            min-width:34px;\n            height:34px;\n            padding:0 6px;\n            border-radius:999px;\n            text-align:center;\n            line-height:34px;\n            font-weight:bold;\n            border:3px solid white;\n            box-shadow:0 2px 8px rgba(0,0,0,0.35);\n            font-size:13px;\n            font-family:Arial, sans-serif;\n        \"\u003e\n            1/7\n        \u003c/div\u003e\n        ",
   "className": "empty",
 });
         
     
-        var popup_4f796084fa183eabe668d2f3ed50aa7a = L.popup({
+        var popup_e84552857c0f44c00d4f9975f8d411cc = L.popup({
   "maxWidth": "100%",
 });
 
         
             
-                var html_2b202182387bc49f491097a7c830e4a4 = $(`<div id="html_2b202182387bc49f491097a7c830e4a4" style="width: 100.0%; height: 100.0%;">Urutan 1/7: Hotel Novotel Balikpapan</div>`)[0];
-                popup_4f796084fa183eabe668d2f3ed50aa7a.setContent(html_2b202182387bc49f491097a7c830e4a4);
+                var html_99dd38aa108a95bbf818e9475ba0a2e1 = $(`<div id="html_99dd38aa108a95bbf818e9475ba0a2e1" style="width: 100.0%; height: 100.0%;">Urutan 1/7: Hotel Grand Senyiur Balikpapan</div>`)[0];
+                popup_e84552857c0f44c00d4f9975f8d411cc.setContent(html_99dd38aa108a95bbf818e9475ba0a2e1);
             
         
 
-        marker_bb7ac34939ded63acc5bf998a4ca529a.bindPopup(popup_4f796084fa183eabe668d2f3ed50aa7a)
+        marker_5af3deb8e1f4b8443eabd4c618b96cf8.bindPopup(popup_e84552857c0f44c00d4f9975f8d411cc)
         ;
 
         
     
     
-            marker_bb7ac34939ded63acc5bf998a4ca529a.bindTooltip(
+            marker_5af3deb8e1f4b8443eabd4c618b96cf8.bindTooltip(
                 `<div>
-                     Urutan 1/7: Hotel Novotel Balikpapan
+                     Urutan 1/7: Hotel Grand Senyiur Balikpapan
                  </div>`,
                 {
   "sticky": true,
@@ -156,42 +476,42 @@
             );
         
     
-                marker_bb7ac34939ded63acc5bf998a4ca529a.setIcon(div_icon_545489eaeb04c1660b48b38407979d85);
+                marker_5af3deb8e1f4b8443eabd4c618b96cf8.setIcon(div_icon_de92abf08f1163cf42aefe3230ad5ccd);
             
     
-            var marker_cf170cc734f60b98dddc6f930d8f4bac = L.marker(
-                [-1.271086, 116.833589],
+            var marker_ade760fe95a383f215f811e61aaab4d3 = L.marker(
+                [-1.276809, 116.833898],
                 {
 }
-            ).addTo(map_845c664f5c0ef53fdbb4f4a124fa93a8);
+            ).addTo(map_57184f398f92201e04aa0a44174c9a00);
         
     
-            var div_icon_de2b00e7eb51ac7cffee2ebe369ae98e = L.divIcon({
+            var div_icon_dc81b79d39c60e7bcf7ad13e7dd2d88b = L.divIcon({
   "html": "\n        \u003cdiv style=\"\n            background-color:#2563eb;\n            color:white;\n            min-width:34px;\n            height:34px;\n            padding:0 6px;\n            border-radius:999px;\n            text-align:center;\n            line-height:34px;\n            font-weight:bold;\n            border:3px solid white;\n            box-shadow:0 2px 8px rgba(0,0,0,0.35);\n            font-size:13px;\n            font-family:Arial, sans-serif;\n        \"\u003e\n            2\n        \u003c/div\u003e\n        ",
   "className": "empty",
 });
         
     
-        var popup_aaea0b54a5a24c35b12cd78397a02392 = L.popup({
+        var popup_e66a21b64d010e74197fc7ab902466b0 = L.popup({
   "maxWidth": "100%",
 });
 
         
             
-                var html_0d56e0ad3360a1a8822a5472d879969f = $(`<div id="html_0d56e0ad3360a1a8822a5472d879969f" style="width: 100.0%; height: 100.0%;">Urutan 2: SMPN 1 Balikpapan</div>`)[0];
-                popup_aaea0b54a5a24c35b12cd78397a02392.setContent(html_0d56e0ad3360a1a8822a5472d879969f);
+                var html_5ee7253359103131d688bced5bd2450f = $(`<div id="html_5ee7253359103131d688bced5bd2450f" style="width: 100.0%; height: 100.0%;">Urutan 2: Taman Bekapai</div>`)[0];
+                popup_e66a21b64d010e74197fc7ab902466b0.setContent(html_5ee7253359103131d688bced5bd2450f);
             
         
 
-        marker_cf170cc734f60b98dddc6f930d8f4bac.bindPopup(popup_aaea0b54a5a24c35b12cd78397a02392)
+        marker_ade760fe95a383f215f811e61aaab4d3.bindPopup(popup_e66a21b64d010e74197fc7ab902466b0)
         ;
 
         
     
     
-            marker_cf170cc734f60b98dddc6f930d8f4bac.bindTooltip(
+            marker_ade760fe95a383f215f811e61aaab4d3.bindTooltip(
                 `<div>
-                     Urutan 2: SMPN 1 Balikpapan
+                     Urutan 2: Taman Bekapai
                  </div>`,
                 {
   "sticky": true,
@@ -199,42 +519,42 @@
             );
         
     
-                marker_cf170cc734f60b98dddc6f930d8f4bac.setIcon(div_icon_de2b00e7eb51ac7cffee2ebe369ae98e);
+                marker_ade760fe95a383f215f811e61aaab4d3.setIcon(div_icon_dc81b79d39c60e7bcf7ad13e7dd2d88b);
             
     
-            var marker_2d03226e9d3d576eb9676e3a8e7b08a4 = L.marker(
-                [-1.272935, 116.833273],
+            var marker_42d7e226e7f76e4117a275119fcf05d3 = L.marker(
+                [-1.281096, 116.817581],
                 {
 }
-            ).addTo(map_845c664f5c0ef53fdbb4f4a124fa93a8);
+            ).addTo(map_57184f398f92201e04aa0a44174c9a00);
         
     
-            var div_icon_d574c3f2e41a311d65f861bb2f179ef6 = L.divIcon({
+            var div_icon_b58099354da21b2b1e47d89cb83a8bda = L.divIcon({
   "html": "\n        \u003cdiv style=\"\n            background-color:#2563eb;\n            color:white;\n            min-width:34px;\n            height:34px;\n            padding:0 6px;\n            border-radius:999px;\n            text-align:center;\n            line-height:34px;\n            font-weight:bold;\n            border:3px solid white;\n            box-shadow:0 2px 8px rgba(0,0,0,0.35);\n            font-size:13px;\n            font-family:Arial, sans-serif;\n        \"\u003e\n            3\n        \u003c/div\u003e\n        ",
   "className": "empty",
 });
         
     
-        var popup_f5f0ce57d64648c9d21795cda7a1f9f1 = L.popup({
+        var popup_b5cb309979db855c56c8fe592d2b8e27 = L.popup({
   "maxWidth": "100%",
 });
 
         
             
-                var html_0265fabd1d2ca775ac5093c2958b5cd6 = $(`<div id="html_0265fabd1d2ca775ac5093c2958b5cd6" style="width: 100.0%; height: 100.0%;">Urutan 3: Hotel Grand Senyiur Balikpapan</div>`)[0];
-                popup_f5f0ce57d64648c9d21795cda7a1f9f1.setContent(html_0265fabd1d2ca775ac5093c2958b5cd6);
+                var html_06205183267d30b6e6b91a20c610db3c = $(`<div id="html_06205183267d30b6e6b91a20c610db3c" style="width: 100.0%; height: 100.0%;">Urutan 3: Pantai Kemala</div>`)[0];
+                popup_b5cb309979db855c56c8fe592d2b8e27.setContent(html_06205183267d30b6e6b91a20c610db3c);
             
         
 
-        marker_2d03226e9d3d576eb9676e3a8e7b08a4.bindPopup(popup_f5f0ce57d64648c9d21795cda7a1f9f1)
+        marker_42d7e226e7f76e4117a275119fcf05d3.bindPopup(popup_b5cb309979db855c56c8fe592d2b8e27)
         ;
 
         
     
     
-            marker_2d03226e9d3d576eb9676e3a8e7b08a4.bindTooltip(
+            marker_42d7e226e7f76e4117a275119fcf05d3.bindTooltip(
                 `<div>
-                     Urutan 3: Hotel Grand Senyiur Balikpapan
+                     Urutan 3: Pantai Kemala
                  </div>`,
                 {
   "sticky": true,
@@ -242,40 +562,40 @@
             );
         
     
-                marker_2d03226e9d3d576eb9676e3a8e7b08a4.setIcon(div_icon_d574c3f2e41a311d65f861bb2f179ef6);
+                marker_42d7e226e7f76e4117a275119fcf05d3.setIcon(div_icon_b58099354da21b2b1e47d89cb83a8bda);
             
     
-            var marker_42cbe314ba388764c9d56d59ebabbd95 = L.marker(
+            var marker_9af08378472034514c449c5cfc70f0c8 = L.marker(
                 [-1.27662, 116.8271],
                 {
 }
-            ).addTo(map_845c664f5c0ef53fdbb4f4a124fa93a8);
+            ).addTo(map_57184f398f92201e04aa0a44174c9a00);
         
     
-            var div_icon_e16408a3eb5dcb04dbc21454b071c4ec = L.divIcon({
+            var div_icon_f695e250961e685cf8b8ad1191ee3e12 = L.divIcon({
   "html": "\n        \u003cdiv style=\"\n            background-color:#2563eb;\n            color:white;\n            min-width:34px;\n            height:34px;\n            padding:0 6px;\n            border-radius:999px;\n            text-align:center;\n            line-height:34px;\n            font-weight:bold;\n            border:3px solid white;\n            box-shadow:0 2px 8px rgba(0,0,0,0.35);\n            font-size:13px;\n            font-family:Arial, sans-serif;\n        \"\u003e\n            4\n        \u003c/div\u003e\n        ",
   "className": "empty",
 });
         
     
-        var popup_d8c1cba0c320ad48870c12c19047c05d = L.popup({
+        var popup_b841118085a750f5aa3f727a656d1851 = L.popup({
   "maxWidth": "100%",
 });
 
         
             
-                var html_7599ceed050a8ed4f5001249f49fc953 = $(`<div id="html_7599ceed050a8ed4f5001249f49fc953" style="width: 100.0%; height: 100.0%;">Urutan 4: Balikpapan Plaza</div>`)[0];
-                popup_d8c1cba0c320ad48870c12c19047c05d.setContent(html_7599ceed050a8ed4f5001249f49fc953);
+                var html_9c079d203881286447463e66b1388973 = $(`<div id="html_9c079d203881286447463e66b1388973" style="width: 100.0%; height: 100.0%;">Urutan 4: Balikpapan Plaza</div>`)[0];
+                popup_b841118085a750f5aa3f727a656d1851.setContent(html_9c079d203881286447463e66b1388973);
             
         
 
-        marker_42cbe314ba388764c9d56d59ebabbd95.bindPopup(popup_d8c1cba0c320ad48870c12c19047c05d)
+        marker_9af08378472034514c449c5cfc70f0c8.bindPopup(popup_b841118085a750f5aa3f727a656d1851)
         ;
 
         
     
     
-            marker_42cbe314ba388764c9d56d59ebabbd95.bindTooltip(
+            marker_9af08378472034514c449c5cfc70f0c8.bindTooltip(
                 `<div>
                      Urutan 4: Balikpapan Plaza
                  </div>`,
@@ -285,42 +605,42 @@
             );
         
     
-                marker_42cbe314ba388764c9d56d59ebabbd95.setIcon(div_icon_e16408a3eb5dcb04dbc21454b071c4ec);
+                marker_9af08378472034514c449c5cfc70f0c8.setIcon(div_icon_f695e250961e685cf8b8ad1191ee3e12);
             
     
-            var marker_4fcb0a720490e986baaa1ea60fcbf8e0 = L.marker(
-                [-1.281096, 116.817581],
+            var marker_f1a0a132266340b5d2f970b05f0fc138 = L.marker(
+                [-1.275584, 116.83478],
                 {
 }
-            ).addTo(map_845c664f5c0ef53fdbb4f4a124fa93a8);
+            ).addTo(map_57184f398f92201e04aa0a44174c9a00);
         
     
-            var div_icon_3c1c2e65cdd6dd51018815be07e8146d = L.divIcon({
+            var div_icon_5a2f99616a8e466fdb102b0f074217ca = L.divIcon({
   "html": "\n        \u003cdiv style=\"\n            background-color:#2563eb;\n            color:white;\n            min-width:34px;\n            height:34px;\n            padding:0 6px;\n            border-radius:999px;\n            text-align:center;\n            line-height:34px;\n            font-weight:bold;\n            border:3px solid white;\n            box-shadow:0 2px 8px rgba(0,0,0,0.35);\n            font-size:13px;\n            font-family:Arial, sans-serif;\n        \"\u003e\n            5\n        \u003c/div\u003e\n        ",
   "className": "empty",
 });
         
     
-        var popup_eb177aeef186cc39e92dfdb161d5b840 = L.popup({
+        var popup_c6ce4d15cf4c79123cd9513f10a69156 = L.popup({
   "maxWidth": "100%",
 });
 
         
             
-                var html_4db25193f9ff981395c8e420fa6ba1e6 = $(`<div id="html_4db25193f9ff981395c8e420fa6ba1e6" style="width: 100.0%; height: 100.0%;">Urutan 5: Pantai Kemala</div>`)[0];
-                popup_eb177aeef186cc39e92dfdb161d5b840.setContent(html_4db25193f9ff981395c8e420fa6ba1e6);
+                var html_c140c28764e7c2c097847da0ea5d6acc = $(`<div id="html_c140c28764e7c2c097847da0ea5d6acc" style="width: 100.0%; height: 100.0%;">Urutan 5: Hotel Novotel Balikpapan</div>`)[0];
+                popup_c6ce4d15cf4c79123cd9513f10a69156.setContent(html_c140c28764e7c2c097847da0ea5d6acc);
             
         
 
-        marker_4fcb0a720490e986baaa1ea60fcbf8e0.bindPopup(popup_eb177aeef186cc39e92dfdb161d5b840)
+        marker_f1a0a132266340b5d2f970b05f0fc138.bindPopup(popup_c6ce4d15cf4c79123cd9513f10a69156)
         ;
 
         
     
     
-            marker_4fcb0a720490e986baaa1ea60fcbf8e0.bindTooltip(
+            marker_f1a0a132266340b5d2f970b05f0fc138.bindTooltip(
                 `<div>
-                     Urutan 5: Pantai Kemala
+                     Urutan 5: Hotel Novotel Balikpapan
                  </div>`,
                 {
   "sticky": true,
@@ -328,42 +648,42 @@
             );
         
     
-                marker_4fcb0a720490e986baaa1ea60fcbf8e0.setIcon(div_icon_3c1c2e65cdd6dd51018815be07e8146d);
+                marker_f1a0a132266340b5d2f970b05f0fc138.setIcon(div_icon_5a2f99616a8e466fdb102b0f074217ca);
             
     
-            var marker_7e7128bcd95005082fe07d0591dd30d3 = L.marker(
-                [-1.276809, 116.833898],
+            var marker_e79c533b904fb97483eea23f8e55cd45 = L.marker(
+                [-1.271086, 116.833589],
                 {
 }
-            ).addTo(map_845c664f5c0ef53fdbb4f4a124fa93a8);
+            ).addTo(map_57184f398f92201e04aa0a44174c9a00);
         
     
-            var div_icon_3b846e7f27389b05996eb9678b506359 = L.divIcon({
+            var div_icon_625a01e52300a0abb6eeb6a3c9723886 = L.divIcon({
   "html": "\n        \u003cdiv style=\"\n            background-color:#2563eb;\n            color:white;\n            min-width:34px;\n            height:34px;\n            padding:0 6px;\n            border-radius:999px;\n            text-align:center;\n            line-height:34px;\n            font-weight:bold;\n            border:3px solid white;\n            box-shadow:0 2px 8px rgba(0,0,0,0.35);\n            font-size:13px;\n            font-family:Arial, sans-serif;\n        \"\u003e\n            6\n        \u003c/div\u003e\n        ",
   "className": "empty",
 });
         
     
-        var popup_6cdc9bb6acb5a686845471d1041eb551 = L.popup({
+        var popup_7a88a4cc44b2742cbda67371fd79379e = L.popup({
   "maxWidth": "100%",
 });
 
         
             
-                var html_19e6917a30a43b2c2a435b444f508cbf = $(`<div id="html_19e6917a30a43b2c2a435b444f508cbf" style="width: 100.0%; height: 100.0%;">Urutan 6: Taman Bekapai</div>`)[0];
-                popup_6cdc9bb6acb5a686845471d1041eb551.setContent(html_19e6917a30a43b2c2a435b444f508cbf);
+                var html_95ffba578ccb0463f37d203df50f081d = $(`<div id="html_95ffba578ccb0463f37d203df50f081d" style="width: 100.0%; height: 100.0%;">Urutan 6: SMPN 1 Balikpapan</div>`)[0];
+                popup_7a88a4cc44b2742cbda67371fd79379e.setContent(html_95ffba578ccb0463f37d203df50f081d);
             
         
 
-        marker_7e7128bcd95005082fe07d0591dd30d3.bindPopup(popup_6cdc9bb6acb5a686845471d1041eb551)
+        marker_e79c533b904fb97483eea23f8e55cd45.bindPopup(popup_7a88a4cc44b2742cbda67371fd79379e)
         ;
 
         
     
     
-            marker_7e7128bcd95005082fe07d0591dd30d3.bindTooltip(
+            marker_e79c533b904fb97483eea23f8e55cd45.bindTooltip(
                 `<div>
-                     Urutan 6: Taman Bekapai
+                     Urutan 6: SMPN 1 Balikpapan
                  </div>`,
                 {
   "sticky": true,
@@ -371,16 +691,16 @@
             );
         
     
-                marker_7e7128bcd95005082fe07d0591dd30d3.setIcon(div_icon_3b846e7f27389b05996eb9678b506359);
+                marker_e79c533b904fb97483eea23f8e55cd45.setIcon(div_icon_625a01e52300a0abb6eeb6a3c9723886);
             
     
-            var poly_line_3824ee4e4a6d3f41f6a8c4be8c7a0b64 = L.polyline(
-                [[-1.275419, 116.834921], [-1.275136, 116.834924], [-1.275101, 116.834496], [-1.275108, 116.834453], [-1.275134, 116.83442], [-1.275386, 116.834414], [-1.275474, 116.834309], [-1.275462, 116.834304], [-1.275388, 116.83427], [-1.275319, 116.834254], [-1.275152, 116.834242], [-1.274977, 116.834252], [-1.27471, 116.834277], [-1.27453, 116.834261], [-1.274308, 116.834194], [-1.274228, 116.834116], [-1.274089, 116.833994], [-1.27396, 116.833856], [-1.273876, 116.833731], [-1.273822, 116.833606], [-1.2738, 116.833439], [-1.273808, 116.833328], [-1.273893, 116.832944], [-1.273722, 116.832882], [-1.273387, 116.832759], [-1.273091, 116.832647], [-1.272887, 116.832551], [-1.272462, 116.832322], [-1.272281, 116.832286], [-1.272242, 116.832282], [-1.272083, 116.832274], [-1.271875, 116.832278], [-1.271813, 116.832275], [-1.271789, 116.832287], [-1.271741, 116.832297], [-1.271618, 116.832362], [-1.271243, 116.832622], [-1.271176, 116.832678], [-1.271169, 116.832683], [-1.271188, 116.832703], [-1.271247, 116.832761], [-1.271232, 116.832757], [-1.271215, 116.832768], [-1.271211, 116.832787], [-1.27127, 116.832865], [-1.27129, 116.832871], [-1.271305, 116.832865], [-1.27136, 116.832928], [-1.271458, 116.833042], [-1.271483, 116.833082], [-1.271514, 116.833167], [-1.27152, 116.833263], [-1.271452, 116.833653], [-1.27152, 116.833263], [-1.271514, 116.833167], [-1.271483, 116.833082], [-1.271458, 116.833042], [-1.27136, 116.832928], [-1.271305, 116.832865], [-1.271307, 116.832842], [-1.2713, 116.832784], [-1.271304, 116.832732], [-1.271324, 116.832666], [-1.271356, 116.832595], [-1.271369, 116.83257], [-1.271636, 116.832384], [-1.27175, 116.832321], [-1.271789, 116.832287], [-1.271813, 116.832275], [-1.271875, 116.832278], [-1.272083, 116.832274], [-1.272242, 116.832282], [-1.272281, 116.832286], [-1.272462, 116.832322], [-1.272887, 116.832551], [-1.273091, 116.832647], [-1.273059, 116.832735], [-1.272932, 116.832677], [-1.272908, 116.83268], [-1.272888, 116.832694], [-1.272823, 116.832832], [-1.272888, 116.832694], [-1.272908, 116.83268], [-1.272932, 116.832677], [-1.273059, 116.832735], [-1.273091, 116.832647], [-1.273387, 116.832759], [-1.273722, 116.832882], [-1.273893, 116.832944], [-1.274389, 116.833054], [-1.275391, 116.833284], [-1.275556, 116.833322], [-1.276534, 116.833393], [-1.276555, 116.833393], [-1.27711, 116.833403], [-1.277164, 116.833403], [-1.277167, 116.833188], [-1.277175, 116.832854], [-1.277186, 116.832394], [-1.277202, 116.831753], [-1.277208, 116.831523], [-1.277214, 116.831297], [-1.277222, 116.830889], [-1.277234, 116.830444], [-1.277242, 116.830069], [-1.277267, 116.829837], [-1.277277, 116.829689], [-1.277276, 116.829588], [-1.277284, 116.82951], [-1.277327, 116.829164], [-1.277348, 116.82877], [-1.277344, 116.828746], [-1.277348, 116.828622], [-1.277355, 116.82849], [-1.277357, 116.828449], [-1.277386, 116.82818], [-1.277402, 116.828071], [-1.27741, 116.828012], [-1.27742, 116.827904], [-1.277438, 116.827768], [-1.277466, 116.827635], [-1.277471, 116.827587], [-1.277586, 116.826913], [-1.277596, 116.826867], [-1.277637, 116.82669], [-1.27769, 116.826458], [-1.277795, 116.825981], [-1.27773, 116.825967], [-1.277619, 116.826439], [-1.277566, 116.826673], [-1.277517, 116.826889], [-1.277084, 116.826795], [-1.276701, 116.826708], [-1.276564, 116.826651], [-1.276536, 116.826692], [-1.276513, 116.826742], [-1.276507, 116.826795], [-1.276508, 116.82684], [-1.276525, 116.826922], [-1.276542, 116.826961], [-1.276566, 116.827], [-1.27663, 116.827074], [-1.276633, 116.827076], [-1.27663, 116.827074], [-1.276566, 116.827], [-1.276542, 116.826961], [-1.276525, 116.826922], [-1.276508, 116.82684], [-1.276507, 116.826795], [-1.276513, 116.826742], [-1.276536, 116.826692], [-1.276564, 116.826651], [-1.276701, 116.826708], [-1.277084, 116.826795], [-1.277517, 116.826889], [-1.277445, 116.827226], [-1.277383, 116.827557], [-1.277379, 116.82758], [-1.277471, 116.827587], [-1.277586, 116.826913], [-1.277596, 116.826867], [-1.277637, 116.82669], [-1.27769, 116.826458], [-1.277795, 116.825981], [-1.277828, 116.82585], [-1.277837, 116.825802], [-1.277952, 116.825184], [-1.277948, 116.825014], [-1.277967, 116.824934], [-1.278095, 116.824414], [-1.278148, 116.824201], [-1.27821, 116.823918], [-1.278227, 116.823843], [-1.278343, 116.823238], [-1.278411, 116.822883], [-1.278423, 116.822823], [-1.278465, 116.822653], [-1.278561, 116.822268], [-1.27864, 116.821952], [-1.278766, 116.821451], [-1.278778, 116.821397], [-1.2788, 116.821304], [-1.278846, 116.821111], [-1.278853, 116.821076], [-1.279026, 116.820261], [-1.279071, 116.82005], [-1.279092, 116.819956], [-1.279193, 116.819486], [-1.279227, 116.819333], [-1.27924, 116.819268], [-1.279311, 116.818974], [-1.279358, 116.818901], [-1.279378, 116.818817], [-1.279441, 116.818543], [-1.279529, 116.818153], [-1.279594, 116.817878], [-1.279644, 116.817669], [-1.279655, 116.817623], [-1.279801, 116.817654], [-1.279885, 116.817665], [-1.27994, 116.817648], [-1.279978, 116.817615], [-1.280001, 116.817484], [-1.280494, 116.8176], [-1.280001, 116.817484], [-1.280015, 116.817407], [-1.280031, 116.817335], [-1.28005, 116.817248], [-1.280076, 116.817125], [-1.280074, 116.817101], [-1.28005, 116.817084], [-1.279869, 116.817046], [-1.279787, 116.817029], [-1.279702, 116.817008], [-1.279681, 116.817099], [-1.279559, 116.817647], [-1.279364, 116.818525], [-1.279294, 116.818865], [-1.279311, 116.818974], [-1.27924, 116.819268], [-1.279227, 116.819333], [-1.279193, 116.819486], [-1.279092, 116.819956], [-1.279071, 116.82005], [-1.279026, 116.820261], [-1.278853, 116.821076], [-1.278846, 116.821111], [-1.2788, 116.821304], [-1.278778, 116.821397], [-1.278766, 116.821451], [-1.27864, 116.821952], [-1.278561, 116.822268], [-1.278465, 116.822653], [-1.278423, 116.822823], [-1.278411, 116.822883], [-1.278343, 116.823238], [-1.278227, 116.823843], [-1.27821, 116.823918], [-1.278148, 116.824201], [-1.278095, 116.824414], [-1.277967, 116.824934], [-1.277948, 116.825014], [-1.277898, 116.825154], [-1.27773, 116.825967], [-1.277619, 116.826439], [-1.277566, 116.826673], [-1.277517, 116.826889], [-1.277445, 116.827226], [-1.277383, 116.827557], [-1.277379, 116.82758], [-1.27734, 116.827773], [-1.277323, 116.827897], [-1.277307, 116.828007], [-1.277241, 116.828456], [-1.277226, 116.828681], [-1.277223, 116.828737], [-1.277183, 116.829515], [-1.277179, 116.829571], [-1.27717, 116.829733], [-1.277158, 116.831001], [-1.27715, 116.831326], [-1.277147, 116.831522], [-1.277143, 116.831893], [-1.277141, 116.832062], [-1.277139, 116.832257], [-1.277122, 116.832763], [-1.277121, 116.832851], [-1.27711, 116.833403], [-1.276555, 116.833393], [-1.276534, 116.833393], [-1.276536, 116.833519], [-1.276528, 116.833892], [-1.276522, 116.834143], [-1.276519, 116.834349], [-1.276354, 116.834355], [-1.275643, 116.834358], [-1.275545, 116.834337], [-1.275487, 116.834314], [-1.275474, 116.834309], [-1.275386, 116.834414], [-1.275134, 116.83442], [-1.275108, 116.834453], [-1.275101, 116.834496], [-1.275136, 116.834924], [-1.275419, 116.834921]],
+            var poly_line_a870ae7062e96e213ed5ba7ae45eaa31 = L.polyline(
+                [[-1.272823, 116.832832], [-1.272888, 116.832694], [-1.272908, 116.83268], [-1.272932, 116.832677], [-1.273059, 116.832735], [-1.273091, 116.832647], [-1.273387, 116.832759], [-1.273722, 116.832882], [-1.273893, 116.832944], [-1.274389, 116.833054], [-1.275391, 116.833284], [-1.275556, 116.833322], [-1.276534, 116.833393], [-1.276536, 116.833519], [-1.276528, 116.833892], [-1.276536, 116.833519], [-1.276534, 116.833393], [-1.276555, 116.833393], [-1.27711, 116.833403], [-1.277164, 116.833403], [-1.277167, 116.833188], [-1.277175, 116.832854], [-1.277186, 116.832394], [-1.277202, 116.831753], [-1.277208, 116.831523], [-1.277214, 116.831297], [-1.277222, 116.830889], [-1.277234, 116.830444], [-1.277242, 116.830069], [-1.277267, 116.829837], [-1.277277, 116.829689], [-1.277276, 116.829588], [-1.277284, 116.82951], [-1.277327, 116.829164], [-1.277348, 116.82877], [-1.277344, 116.828746], [-1.277348, 116.828622], [-1.277355, 116.82849], [-1.277357, 116.828449], [-1.277386, 116.82818], [-1.277402, 116.828071], [-1.27741, 116.828012], [-1.27742, 116.827904], [-1.277438, 116.827768], [-1.277466, 116.827635], [-1.277471, 116.827587], [-1.277586, 116.826913], [-1.277596, 116.826867], [-1.277637, 116.82669], [-1.27769, 116.826458], [-1.277795, 116.825981], [-1.277828, 116.82585], [-1.277837, 116.825802], [-1.277952, 116.825184], [-1.277948, 116.825014], [-1.277967, 116.824934], [-1.278095, 116.824414], [-1.278148, 116.824201], [-1.27821, 116.823918], [-1.278227, 116.823843], [-1.278343, 116.823238], [-1.278411, 116.822883], [-1.278423, 116.822823], [-1.278465, 116.822653], [-1.278561, 116.822268], [-1.27864, 116.821952], [-1.278766, 116.821451], [-1.278778, 116.821397], [-1.2788, 116.821304], [-1.278846, 116.821111], [-1.278853, 116.821076], [-1.279026, 116.820261], [-1.279071, 116.82005], [-1.279092, 116.819956], [-1.279193, 116.819486], [-1.279227, 116.819333], [-1.27924, 116.819268], [-1.279311, 116.818974], [-1.279358, 116.818901], [-1.279378, 116.818817], [-1.279441, 116.818543], [-1.279529, 116.818153], [-1.279594, 116.817878], [-1.279644, 116.817669], [-1.279655, 116.817623], [-1.279801, 116.817654], [-1.279885, 116.817665], [-1.27994, 116.817648], [-1.279978, 116.817615], [-1.280001, 116.817484], [-1.280494, 116.8176], [-1.280001, 116.817484], [-1.280015, 116.817407], [-1.280031, 116.817335], [-1.28005, 116.817248], [-1.280076, 116.817125], [-1.280074, 116.817101], [-1.28005, 116.817084], [-1.279869, 116.817046], [-1.279787, 116.817029], [-1.279702, 116.817008], [-1.279681, 116.817099], [-1.279559, 116.817647], [-1.279364, 116.818525], [-1.279294, 116.818865], [-1.279311, 116.818974], [-1.27924, 116.819268], [-1.279227, 116.819333], [-1.279193, 116.819486], [-1.279092, 116.819956], [-1.279071, 116.82005], [-1.279026, 116.820261], [-1.278853, 116.821076], [-1.278846, 116.821111], [-1.2788, 116.821304], [-1.278778, 116.821397], [-1.278766, 116.821451], [-1.27864, 116.821952], [-1.278561, 116.822268], [-1.278465, 116.822653], [-1.278423, 116.822823], [-1.278411, 116.822883], [-1.278343, 116.823238], [-1.278227, 116.823843], [-1.27821, 116.823918], [-1.278148, 116.824201], [-1.278095, 116.824414], [-1.277967, 116.824934], [-1.277948, 116.825014], [-1.277898, 116.825154], [-1.27773, 116.825967], [-1.277619, 116.826439], [-1.277566, 116.826673], [-1.277517, 116.826889], [-1.277084, 116.826795], [-1.276701, 116.826708], [-1.276564, 116.826651], [-1.276536, 116.826692], [-1.276513, 116.826742], [-1.276507, 116.826795], [-1.276508, 116.82684], [-1.276525, 116.826922], [-1.276542, 116.826961], [-1.276566, 116.827], [-1.27663, 116.827074], [-1.276633, 116.827076], [-1.27663, 116.827074], [-1.276566, 116.827], [-1.276542, 116.826961], [-1.276525, 116.826922], [-1.276508, 116.82684], [-1.276507, 116.826795], [-1.276513, 116.826742], [-1.276536, 116.826692], [-1.276564, 116.826651], [-1.276701, 116.826708], [-1.277084, 116.826795], [-1.277517, 116.826889], [-1.277445, 116.827226], [-1.277383, 116.827557], [-1.277379, 116.82758], [-1.27734, 116.827773], [-1.277323, 116.827897], [-1.277307, 116.828007], [-1.277241, 116.828456], [-1.277226, 116.828681], [-1.277223, 116.828737], [-1.277183, 116.829515], [-1.277179, 116.829571], [-1.27717, 116.829733], [-1.277158, 116.831001], [-1.27715, 116.831326], [-1.277147, 116.831522], [-1.277143, 116.831893], [-1.277141, 116.832062], [-1.277139, 116.832257], [-1.277122, 116.832763], [-1.277121, 116.832851], [-1.27711, 116.833403], [-1.277106, 116.834012], [-1.277103, 116.834111], [-1.277097, 116.834333], [-1.276519, 116.834349], [-1.276354, 116.834355], [-1.275643, 116.834358], [-1.275545, 116.834337], [-1.275487, 116.834314], [-1.275474, 116.834309], [-1.275386, 116.834414], [-1.275134, 116.83442], [-1.275108, 116.834453], [-1.275101, 116.834496], [-1.275136, 116.834924], [-1.275419, 116.834921], [-1.275136, 116.834924], [-1.275101, 116.834496], [-1.275108, 116.834453], [-1.275134, 116.83442], [-1.275386, 116.834414], [-1.275474, 116.834309], [-1.275462, 116.834304], [-1.275388, 116.83427], [-1.275319, 116.834254], [-1.275152, 116.834242], [-1.274977, 116.834252], [-1.27471, 116.834277], [-1.27453, 116.834261], [-1.274308, 116.834194], [-1.274228, 116.834116], [-1.274089, 116.833994], [-1.27396, 116.833856], [-1.273876, 116.833731], [-1.273822, 116.833606], [-1.2738, 116.833439], [-1.273808, 116.833328], [-1.273893, 116.832944], [-1.273722, 116.832882], [-1.273387, 116.832759], [-1.273091, 116.832647], [-1.272887, 116.832551], [-1.272462, 116.832322], [-1.272281, 116.832286], [-1.272242, 116.832282], [-1.272083, 116.832274], [-1.271875, 116.832278], [-1.271813, 116.832275], [-1.271789, 116.832287], [-1.271741, 116.832297], [-1.271618, 116.832362], [-1.271243, 116.832622], [-1.271176, 116.832678], [-1.271169, 116.832683], [-1.271188, 116.832703], [-1.271247, 116.832761], [-1.271232, 116.832757], [-1.271215, 116.832768], [-1.271211, 116.832787], [-1.27127, 116.832865], [-1.27129, 116.832871], [-1.271305, 116.832865], [-1.27136, 116.832928], [-1.271458, 116.833042], [-1.271483, 116.833082], [-1.271514, 116.833167], [-1.27152, 116.833263], [-1.271452, 116.833653], [-1.27152, 116.833263], [-1.271514, 116.833167], [-1.271483, 116.833082], [-1.271458, 116.833042], [-1.27136, 116.832928], [-1.271305, 116.832865], [-1.271307, 116.832842], [-1.2713, 116.832784], [-1.271304, 116.832732], [-1.271324, 116.832666], [-1.271356, 116.832595], [-1.271369, 116.83257], [-1.271636, 116.832384], [-1.27175, 116.832321], [-1.271789, 116.832287], [-1.271813, 116.832275], [-1.271875, 116.832278], [-1.272083, 116.832274], [-1.272242, 116.832282], [-1.272281, 116.832286], [-1.272462, 116.832322], [-1.272887, 116.832551], [-1.273091, 116.832647], [-1.273059, 116.832735], [-1.272932, 116.832677], [-1.272908, 116.83268], [-1.272888, 116.832694], [-1.272823, 116.832832]],
                 {"bubblingMouseEvents": true, "color": "#2563eb", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#2563eb", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.85, "smoothFactor": 1.0, "stroke": true, "weight": 5}
-            ).addTo(map_845c664f5c0ef53fdbb4f4a124fa93a8);
+            ).addTo(map_57184f398f92201e04aa0a44174c9a00);
         
     
-            poly_line_3824ee4e4a6d3f41f6a8c4be8c7a0b64.bindTooltip(
+            poly_line_a870ae7062e96e213ed5ba7ae45eaa31.bindTooltip(
                 `<div>
                      Rute optimal mengikuti jalan
                  </div>`,
